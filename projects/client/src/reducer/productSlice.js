@@ -1,6 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 import axios from "axios";
+import {
+  errorAlert,
+  errorAlertWithMessage,
+  successAlert,
+} from "../helper/alert";
 
 const BASE_URL = "/products";
 
@@ -26,13 +31,27 @@ const productSlice = createSlice({
 
 export const { setProduct, setLoading } = productSlice.actions;
 
+export function fetchProducts(query) {
+  return async (dispatch) => {
+    try {
+      const res = await axios.get(`http://localhost:2000${BASE_URL}?${query}`);
+      console.log("produk", res);
+    } catch (error) {
+      console.log("error get produk", error);
+    }
+  };
+}
+
 export function createProduct(data) {
   console.log("datacreate", data);
   return async (dispatch) => {
     try {
       const res = await axios.post(`http://localhost:2000${BASE_URL}`, data);
+      console.log("produk", res);
+      successAlert(res.data.message);
     } catch (error) {
       console.log("errorcreateproduct", error);
+      errorAlertWithMessage(error.response.data.message);
     }
   };
 }

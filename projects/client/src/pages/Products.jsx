@@ -5,9 +5,11 @@ import ModalForm from "../components/ModalForm";
 import ProductsForm from "../components/ProductsForm";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCategories } from "../reducer/categorySlice";
-import { createProduct } from "../reducer/productSlice";
+import { createProduct, fetchProducts } from "../reducer/productSlice";
+import { useParams, useSearchParams } from "react-router-dom";
 
 const Products = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
   const dispatch = useDispatch();
   const [openModal, setOpenModal] = useState(false);
 
@@ -20,12 +22,19 @@ const Products = () => {
         }
       : {}
   );
-  console.log("gambar", image);
+  const [productName, setProductName] = useState("");
+  console.log("name", productName);
+  const [description, setDescription] = useState("");
+  const [price, setPrice] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const userGlobal = useSelector((state) => state.user);
   console.log("Ini User", userGlobal);
   const categoryGlobal = useSelector((state) => state.category);
 
+  useEffect(() => {
+    dispatch(fetchProducts())
+  },[dispatch])
+  
   useEffect(() => {
     // jika ada userGlobal id ya
     if (userGlobal) {
@@ -36,16 +45,16 @@ const Products = () => {
 
   function handleSubmit(e) {
     e.preventDefault();
-    const { productName, desc, price } = e.target;
-    console.log("input productname", productName);
-
+    const name = productName ? productName : null;
+    const desc = description ? description : null;
+    const priceProduct = price ? price : null;
     const categoryid = selectedCategory.id;
 
     const newProduct = new FormData();
 
-    newProduct.append("productName", productName?.value);
-    newProduct.append("desc", desc?.value);
-    newProduct.append("price", price?.value);
+    newProduct.append("productName", productName);
+    newProduct.append("description", desc);
+    newProduct.append("price", priceProduct);
     newProduct.append("category", categoryid);
     newProduct.append("product_image", image);
 
@@ -65,6 +74,12 @@ const Products = () => {
             categoryOptions={categoryGlobal.categories}
             selectCategory={selectedCategory}
             setSelectCategory={setSelectedCategory}
+            productName={productName}
+            setProductName={setProductName}
+            description={description}
+            setDescription={setDescription}
+            price={price}
+            setPrice={setPrice}
             image={image}
             setImage={setImage}
           />

@@ -12,6 +12,12 @@ export default function ProductsForm({
   categoryOptions = [],
   selectCategory,
   setSelectCategory,
+  productName,
+  setProductName,
+  description,
+  setDescription,
+  price,
+  setPrice,
   currPage,
   product = {},
   image,
@@ -21,7 +27,7 @@ export default function ProductsForm({
   return (
     <form
       className="space-y-8 divide-y divide-gray-200"
-      onSubmit={handleSubmit}
+      // onSubmit={handleSubmit}
     >
       <div className="space-y-8 divide-y divide-gray-200">
         <div>
@@ -48,6 +54,10 @@ export default function ProductsForm({
                 id="productName"
                 className="block w-full min-w-0 flex-1 rounded-md border-gray-300 focus:border-orange-500 focus:ring-orange-500 sm:text-sm"
                 // defaultValue={product.name}
+                // value={productName}
+                onChange={(e) => {
+                  setProductName(e.target.value);
+                }}
                 required
               />
             </div>
@@ -67,6 +77,9 @@ export default function ProductsForm({
                   rows={3}
                   className="block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm"
                   // defaultValue={product.desc}
+                  onChange={(e) => {
+                    setDescription(e.target.value);
+                  }}
                 />
               </div>
               <p className="mt-2 text-sm text-gray-500">
@@ -104,6 +117,9 @@ export default function ProductsForm({
                 id="price"
                 className="spin-hidden block w-full min-w-0 flex-1 rounded-md border-gray-300 focus:border-orange-500 focus:ring-orange-500 sm:text-sm"
                 // defaultValue={product.price}
+                onChange={(e) => {
+                  setPrice(e.target.value);
+                }}
               />
             </div>
 
