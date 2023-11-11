@@ -7,13 +7,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchCategories } from "../reducer/categorySlice";
 import { createProduct, fetchProducts } from "../reducer/productSlice";
 import { useParams, useSearchParams } from "react-router-dom";
+import TableBodyProduct from "../components/TableBodyProduct";
+import Spinner from "../components/Spinner";
+import Pagination from "../components/Pagination";
 
 const Products = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const dispatch = useDispatch();
   const [openModal, setOpenModal] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
 
-  console.log("openmodal", openModal);
+  // console.log("openmodal", openModal);
   const [productEdit, setProductEdit] = useState();
   const [image, setImage] = useState(
     productEdit && productEdit.image_url
@@ -23,18 +27,20 @@ const Products = () => {
       : {}
   );
   const [productName, setProductName] = useState("");
-  console.log("name", productName);
+  // console.log("name", productName);
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const userGlobal = useSelector((state) => state.user);
-  console.log("Ini User", userGlobal);
+  // console.log("Ini User", userGlobal);
   const categoryGlobal = useSelector((state) => state.category);
-
+  const productGlobal = useSelector((state) => state.product);
+  console.log("tes", productGlobal);
   useEffect(() => {
-    dispatch(fetchProducts())
-  },[dispatch])
-  
+    console.log("tes");
+    dispatch(fetchProducts());
+  }, [dispatch]);
+
   useEffect(() => {
     // jika ada userGlobal id ya
     if (userGlobal) {
@@ -60,6 +66,8 @@ const Products = () => {
 
     dispatch(createProduct(newProduct));
   }
+
+  if (productGlobal.isLoading) return <Spinner />;
 
   return (
     <div>
@@ -96,7 +104,27 @@ const Products = () => {
 
       <Table
         className="mb-4"
-        headCols={["Nama Products", "Category", "Qty", "Description"]}
+        headCols={["Nama Products", "Category", "Qty", "Desc", "stock"]}
+        tableBody={
+          <TableBodyProduct
+            products={
+              productGlobal && productGlobal.product
+                ? productGlobal.product
+                : []
+            }
+          />
+        }
+      />
+      <Pagination
+        itemsInPage={
+          productGlobal && productGlobal.product
+            ? productGlobal.product.length
+            : 0
+        }
+        totalItems={productGlobal.totalItems}
+        totalPages={productGlobal.totalPages}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
       />
     </div>
   );

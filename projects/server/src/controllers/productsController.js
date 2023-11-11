@@ -1,11 +1,28 @@
 const db = require("../models");
 
 async function getProducts(req, res) {
-  console.log("produk",req.query)
+  console.log("produk", req.query);
   try {
-    
+    const products = await db.m_products.findAndCountAll({
+      where: {},
+      include: [
+        {
+          model: db.m_category,
+          attributes: ["id", "name"],
+        },
+        {
+          model: db.m_stocks,
+          attributes: ["id", "stock"],
+        },
+      ],
+    });
+
+    res.status(200).send({
+      message: "succesfully get data product",
+      products,
+    });
   } catch (error) {
-    console.log("error get produk",error)
+    console.log("error get produk", error);
   }
 }
 
@@ -21,7 +38,7 @@ async function createProducts(req, res) {
       return res.status(400).send({ message: "please completed your data" });
 
     const productNameExist = await db.m_products.findOne({
-      where:{name:productName}
+      where: { name: productName },
     });
 
     if (productNameExist)
@@ -45,5 +62,6 @@ async function createProducts(req, res) {
 }
 
 module.exports = {
+  getProducts,
   createProducts,
 };

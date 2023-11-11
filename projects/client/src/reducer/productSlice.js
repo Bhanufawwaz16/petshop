@@ -34,8 +34,17 @@ export const { setProduct, setLoading } = productSlice.actions;
 export function fetchProducts(query) {
   return async (dispatch) => {
     try {
+      dispatch(setLoading(true))
       const res = await axios.get(`http://localhost:2000${BASE_URL}?${query}`);
-      console.log("produk", res);
+      console.log("get produk", res);
+      dispatch(
+        setProduct({
+          product: res.data.products.rows,
+          totalItems: res.data.products.count,
+          totalPages: Math.ceil(res.data.products.count / 12),
+        })
+      );
+      dispatch(setLoading(false))
     } catch (error) {
       console.log("error get produk", error);
     }
