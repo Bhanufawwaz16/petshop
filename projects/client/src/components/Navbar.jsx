@@ -18,6 +18,7 @@ import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import avatar from "../assets/default-avatar.jpg";
 import logo from "../assets/logo.png";
+import { Link } from "react-router-dom";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -52,12 +53,12 @@ export default function Navbar() {
                     >
                       Home
                     </a>
-                    <a
-                      href="#"
+                    <Link
+                      to="/product"
                       className="rounded-md px-3 py-2 text-sm font-medium text-black-300 hover:bg-blue-700 hover:text-white"
                     >
                       Produk
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>

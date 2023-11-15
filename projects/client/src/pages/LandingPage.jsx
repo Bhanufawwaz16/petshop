@@ -1,6 +1,6 @@
 import Carousel from "../components/Carousel";
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 // import opencage from "opencage-api-client";
 import CategoryTab from "../components/CategoryTab";
 import Banner1 from "../assets/banner1.jpg";
@@ -12,6 +12,8 @@ import Banner3 from "../assets/banner3.jpg";
 //const API_key = process.env.REACT_APP_OPENCAGE_API_KEY;
 
 function LandingPage() {
+  const dispatch = useDispatch();
+
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
   const [lat, setLat] = useState("");

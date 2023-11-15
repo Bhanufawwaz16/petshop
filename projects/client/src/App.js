@@ -7,6 +7,10 @@ import LandingPage from "./pages/LandingPage";
 import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
 import Products from "./pages/Products";
+import Dashboard from "./pages/Dashboard";
+import Inventory from "./pages/Inventory";
+import StockHistory from "./pages/StockHistory";
+import ProductList from "./pages/ProductList";
 
 function App() {
   return (
@@ -21,11 +25,32 @@ function App() {
             </>
           }
         />
+        <Route
+          path="/product"
+          element={
+            <>
+              <Navbar />
+              <ProductList />
+            </>
+          }
+        />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route
+          path="/dashboard"
+          element={<Sidebar element={<Dashboard />} />}
+        />
+        <Route
           path="/dashboard/products"
           element={<Sidebar element={<Products />} />}
+        />
+        <Route
+          path="/dashboard/inventory"
+          element={<Sidebar element={<Inventory />} />}
+        />
+        <Route
+          path="/dashboard/stock-history"
+          element={<Sidebar element={<StockHistory />} />}
         />
       </Routes>
     </div>
