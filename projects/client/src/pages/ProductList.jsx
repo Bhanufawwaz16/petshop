@@ -1,50 +1,64 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import FilterProductList from "../components/FilterProductList";
 import Comboboxes from "../components/Comboboxes";
 import ProductCard from "../components/ProductCard";
 import Pagination from "../components/Pagination";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "../reducer/productSlice";
+import Spinner from "../components/Spinner";
+import { useSearchParams } from "react-router-dom";
 
 const ProductList = () => {
   const dispatch = useDispatch();
 
-//   const productsGlobal = useSelector((state) => state.product);
-//   console.log("product global list", productsGlobal);
+  const productsGlobal = useSelector((state) => state.product);
+  console.log("product global list", productsGlobal);
 
-//   useEffect(() => {
-//     console.log('test loop')
-//     dispatch(fetchProducts());
-//   }, [dispatch]);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [currentPage, setCurrentPage] = useState(1);
+
+  useEffect(() => {
+    console.log("test loop");
+    let query = `page=${currentPage}`;
+    query += `&${searchParams.toString()}`;
+
+    dispatch(fetchProducts(query));
+  }, [dispatch, currentPage]);
+
+  if (productsGlobal.isLoading) return <Spinner />;
 
   return (
     <div className="container-screen">
-      <FilterProductList>
+      {/* <FilterProductList>
         <Comboboxes
-        //   label="Sort"
-        //   options={sortOptions}
-        //   selectedValue={sortFilter}
-        //   onChange={(s) => setSortFilter(s)}
-        //   className="font-medium"
+        // label="Sort"
+        // options={sortOptions}
+        // selectedValue={sortFilter}
+        // onChange={(s) => setSortFilter(s)}
+        // className="font-medium"
         />
         <Comboboxes
-        //   label="Category"
-        //   options={categoryOptions}
-        //   selectedValue={categoryFilter}
-        //   onChange={(c) => setCategoryFilter(c)}
-        //   className="font-medium"
+        // label="Category"
+        // options={categoryOptions}
+        // selectedValue={categoryFilter}
+        // onChange={(c) => setCategoryFilter(c)}
+        // className="font-medium"
         />
-      </FilterProductList>
+      </FilterProductList> */}
       <ProductCard
-        // products={productsGlobal.product}
-        // isLoading={productsGlobal.isLoading}
+        products={productsGlobal.product}
+        isLoading={productsGlobal.isLoading}
       />
       <Pagination
-      // itemsInPage={countProducts(productsGlobal.products)}
-      // totalItems={productsGlobal.totalItems}
-      // totalPages={productsGlobal.totalPages}
-      // currentPage={currentPage}
-      // setCurrentPage={setCurrentPage}
+        itemsInPage={
+          productsGlobal && productsGlobal.product
+            ? productsGlobal.product.length
+            : 0
+        }
+        totalItems={productsGlobal.totalItems}
+        totalPages={productsGlobal.totalPages}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
       />
          
     </div>

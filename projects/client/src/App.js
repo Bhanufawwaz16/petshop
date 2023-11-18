@@ -11,6 +11,7 @@ import Dashboard from "./pages/Dashboard";
 import Inventory from "./pages/Inventory";
 import StockHistory from "./pages/StockHistory";
 import ProductList from "./pages/ProductList";
+import ProductDetail from "./pages/ProductDetail";
 
 function App() {
   return (
@@ -31,6 +32,15 @@ function App() {
             <>
               <Navbar />
               <ProductList />
+            </>
+          }
+        />
+        <Route
+          path="/product/:id"
+          element={
+            <>
+              <Navbar />
+              <ProductDetail />
             </>
           }
         />

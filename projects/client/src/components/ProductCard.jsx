@@ -11,21 +11,27 @@ export default function ProductCard({
   isLoading = false,
   darkMode = false,
 }) {
-//   if (isLoading) return <ProductListSkeleton />;
+  //   if (isLoading) return <ProductListSkeleton />;
+  console.log("products", products);
   if (!products.length && !isLoading)
     return darkMode ? <ProductNotFoundDark /> : <ProductNotFound />;
 
   return (
     <div className="mb-8 grid grid-cols-1 gap-y-8 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8">
       {products.map((product) => (
-        <Link key={product.id} to={`/products/${product.id}`}>
+        <Link
+          key={product.id}
+          to={`/product/${product.id}`}
+          state={{ productDt: product }}
+        >
           <div className="shadow-md rounded-md border p-4 min-h-[460px] bg-white">
             <div>
               <div className="relative h-64 w-full overflow-hidden rounded-lg">
                 <img
                   src={
-                    `${process.env.REACT_APP_PRODUCT_IMG_BASE_URL}/${product.image_url}` ||
-                    BrokenImg
+                    product && product.image_url.length > 0
+                      ? `http://localhost:2000/static/products/${product.image_url}`
+                      : BrokenImg
                   }
                   onError={({ currentTarget }) => {
                     currentTarget.onerror = null;
@@ -40,25 +46,19 @@ export default function ProductCard({
                   {product.name}
                 </h3>
               </div>
-              {/* <p className="relative text-lg font-semibold text-red-400 truncate">
-                {numToIDRCurrency(
-                  product.price - getProductDiscountAmount(product.Vouchers) <=
-                    0
-                    ? 0
-                    : product.price - getProductDiscountAmount(product.Vouchers)
-                )}
-              </p> */}
+              <p className="relative text-lg font-semibold text-red-400 truncate">
+                {numToIDRCurrency(product.price)}
+              </p>
               {/* <ProductVoucherBadge product={product} /> */}
               <div className="flex gap-1 items-center mt-2">
-                <MapPinIcon className="w-3 h-3 text-gray-400" />
-                <p className="text-sm text-gray-900">
-                  {product.Stocks?.[0]?.Branch?.kota}
-                </p>
+                {/* <MapPinIcon className="w-3 h-3 text-gray-400" /> */}
+                <p className="text-sm text-gray-900">{product.m_stocks}</p>
               </div>
             </div>
           </div>
         </Link>
       ))}
-    </div>
-  );
+         
+    </div>
+  );
 }
