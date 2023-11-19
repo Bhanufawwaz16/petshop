@@ -23,6 +23,7 @@ async function getProducts(req, res) {
     });
   } catch (error) {
     console.log("error get produk", error);
+    return res.status(400).send(error);
   }
 }
 
@@ -31,6 +32,7 @@ async function createProducts(req, res) {
 
   try {
     const { productName, description } = req.body;
+    const stockProduct = parseInt(req.body.stockProduct);
     const price = parseInt(req.body.price);
     const categoryId = parseInt(req.body.category);
 
@@ -52,6 +54,17 @@ async function createProducts(req, res) {
       description: description,
       m_category_id: categoryId,
       price: price,
+    });
+
+    const stock = await db.m_stocks.create({
+      m_product_id: product.id,
+      stock: stockProduct,
+    });
+
+    const stockHistory = await db.m_stock_history.create({
+      m_product_id: product.id,
+      status: "IN",
+      qty: stockProduct,
     });
 
     return res.status(200).send({ message: "succesfully get createProducts" });

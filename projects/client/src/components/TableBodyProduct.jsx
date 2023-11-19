@@ -51,13 +51,13 @@ export default function TableBodyProduct({ products = [], onEdit, onDelete }) {
             <td className="px-3 py-4 text-left text-sm text-gray-500 text-center">
               <div
                 className={`inline-flex rounded-full px-2 text-xs font-semibold leading-5 ${
-                  product.m_stocks.stock > 20
+                  product.m_stocks[0].stock > 20
                     ? "bg-green-100 text-green-800"
                     : "bg-red-100 text-red-800"
                 }`}
               >
                 <span className="text-left max-w-[100px] truncate">
-                  {product.m_stocks.stock || 0}
+                  {product.m_stocks[0].stock || 0}
                 </span>
               </div>
             </td>

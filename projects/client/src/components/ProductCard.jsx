@@ -52,7 +52,9 @@ export default function ProductCard({
               {/* <ProductVoucherBadge product={product} /> */}
               <div className="flex gap-1 items-center mt-2">
                 {/* <MapPinIcon className="w-3 h-3 text-gray-400" /> */}
-                <p className="text-sm text-gray-900">{product.m_stocks}</p>
+                <p className="text-sm text-gray-900">
+                  {product.m_stocks[0].stock}
+                </p>
               </div>
             </div>
           </div>

@@ -18,6 +18,7 @@ const Products = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
   // console.log("openmodal", openModal);
+  const [addNewData, setAddNewData] = useState(false);
   const [productEdit, setProductEdit] = useState();
   const [image, setImage] = useState(
     productEdit && productEdit.image_url
@@ -27,9 +28,9 @@ const Products = () => {
       : {}
   );
   const [productName, setProductName] = useState("");
-  // console.log("name", productName);
+  const [stock, setStock] = useState(0);
   const [description, setDescription] = useState("");
-  const [price, setPrice] = useState("");
+  const [price, setPrice] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState("");
   const userGlobal = useSelector((state) => state.user);
   // console.log("Ini User", userGlobal);
@@ -39,7 +40,15 @@ const Products = () => {
   useEffect(() => {
     console.log("tes");
     dispatch(fetchProducts());
-  }, [dispatch]);
+  }, [dispatch, addNewData]);
+
+  useEffect(() => {
+    if (openModal === false) {
+      setStock(0);
+      setPrice(0);
+      setAddNewData(false);
+    }
+  }, [openModal]);
 
   useEffect(() => {
     // jika ada userGlobal id ya
@@ -54,6 +63,7 @@ const Products = () => {
     const name = productName ? productName : null;
     const desc = description ? description : null;
     const priceProduct = price ? price : null;
+    const stockProduct = stock ? stock : null;
     const categoryid = selectedCategory.id;
 
     const newProduct = new FormData();
@@ -61,10 +71,18 @@ const Products = () => {
     newProduct.append("productName", productName);
     newProduct.append("description", desc);
     newProduct.append("price", priceProduct);
+    newProduct.append("stockProduct", stockProduct);
     newProduct.append("category", categoryid);
     newProduct.append("product_image", image);
 
-    dispatch(createProduct(newProduct));
+    dispatch(createProduct(newProduct)).then((res) => {
+      if (res && res.status === 200) {
+        setTimeout(() => {
+          setAddNewData(true);
+          setOpenModal(false);
+        }, 2000);
+      }
+    });
   }
 
   if (productGlobal.isLoading) return <Spinner />;
@@ -90,6 +108,7 @@ const Products = () => {
             setPrice={setPrice}
             image={image}
             setImage={setImage}
+            setStock={setStock}
           />
         }
       />

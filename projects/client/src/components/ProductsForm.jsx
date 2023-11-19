@@ -22,6 +22,7 @@ export default function ProductsForm({
   product = {},
   image,
   setImage,
+  setStock,
 }) {
   console.log("categori op", categoryOptions);
   return (
@@ -123,24 +124,27 @@ export default function ProductsForm({
               />
             </div>
 
-            {/* {(userGlobal.role !== "superadmin" || action === "edit") && (
-              <div className="sm:col-span-2 sm:col-start-1">
-                <label
-                  htmlFor="stock"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Stock
-                </label>
-                <input
-                  type="number"
-                  min="0"
-                  name="stock"
-                  id="stock"
-                  className="spin-hidden block w-full min-w-0 flex-1 rounded-md border-gray-300 focus:border-orange-500 focus:ring-orange-500 sm:text-sm"
-                  defaultValue={product.Stocks?.[product.stockIdx]?.stock}
-                />
-              </div>
-            )} */}
+            {/* {(userGlobal.role !== "superadmin" || action === "edit") && ( */}
+            <div className="sm:col-span-2 sm:col-start-1">
+              <label
+                htmlFor="stock"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Stock
+              </label>
+              <input
+                type="number"
+                min="0"
+                name="stock"
+                id="stock"
+                className="spin-hidden block w-full min-w-0 flex-1 rounded-md border-gray-300 focus:border-orange-500 focus:ring-orange-500 sm:text-sm"
+                defaultValue={product.Stocks?.[product.stockIdx]?.stock}
+                onChange={(e) => {
+                  setStock(e.target.value);
+                }}
+              />
+            </div>
+            {/* )} */}
 
             <div className="sm:col-span-6">
               <label className="block text-sm font-medium text-gray-700">

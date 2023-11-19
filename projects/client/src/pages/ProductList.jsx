@@ -4,9 +4,9 @@ import Comboboxes from "../components/Comboboxes";
 import ProductCard from "../components/ProductCard";
 import Pagination from "../components/Pagination";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProducts } from "../reducer/productSlice";
 import Spinner from "../components/Spinner";
 import { useSearchParams } from "react-router-dom";
+import { fetchProducts } from "../reducer/productSlice";
 
 const ProductList = () => {
   const dispatch = useDispatch();

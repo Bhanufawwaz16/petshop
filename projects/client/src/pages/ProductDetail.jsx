@@ -103,19 +103,19 @@ export default function ProductDetail() {
     });
   }
 
-//   if (isLoading) {
-//     return (
-//       <div className="container-screen py-16 sm:py-24">
-//         {<ProductDetailSkeleton />}
-//       </div>
-//     );
-//   } else if (!product?.id) {
-//     return (
-//       <div className="container-screen py-16 sm:py-24">
-//         <ProductNotFound />
-//       </div>
-//     );
-//   }
+  //   if (isLoading) {
+  //     return (
+  //       <div className="container-screen py-16 sm:py-24">
+  //         {<ProductDetailSkeleton />}
+  //       </div>
+  //     );
+  //   } else if (!product?.id) {
+  //     return (
+  //       <div className="container-screen py-16 sm:py-24">
+  //         <ProductNotFound />
+  //       </div>
+  //     );
+  //   }
 
   return (
     <div className="bg-white container-screen">
@@ -124,7 +124,7 @@ export default function ProductDetail() {
           <div className="aspect-w-1 aspect-h-1 overflow-hidden rounded-lg">
             <img
               src={
-                `${process.env.REACT_APP_PRODUCT_IMG_BASE_URL}/${product.image_url}` ||
+                `${process.env.REACT_APP_PRODUCT_IMG_BASE_URL}/${productDt.image_url}` ||
                 BrokenImg
               }
               onError={({ currentTarget }) => {

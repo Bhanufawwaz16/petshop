@@ -58,6 +58,7 @@ export function createProduct(data) {
       const res = await axios.post(`http://localhost:2000${BASE_URL}`, data);
       console.log("produk", res);
       successAlert(res.data.message);
+      return res
     } catch (error) {
       console.log("errorcreateproduct", error);
       errorAlertWithMessage(error.response.data.message);
