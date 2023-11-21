@@ -1,7 +1,7 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class m_cart extends Model {
+  class m_token extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,16 +11,23 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  m_cart.init(
+  m_token.init(
     {
-      m_product_id: DataTypes.INTEGER,
       m_user_id: DataTypes.INTEGER,
-      qty: DataTypes.INTEGER,
+      token: DataTypes.STRING,
+      expired: DataTypes.DATE,
+      valid: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: true,
+      },
+      status: {
+        type: DataTypes.ENUM("LOGIN", "FORGOT-PASSWORD", "VERIFICATION"),
+      },
     },
     {
       sequelize,
-      modelName: "m_cart",
+      modelName: "m_token",
     }
   );
-  return m_cart;
+  return m_token;
 };

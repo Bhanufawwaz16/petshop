@@ -1,6 +1,8 @@
 const db = require("../models");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const { nanoid } = require("nanoid");
+const moment = require("moment");
 
 async function register(req, res) {
   try {
@@ -81,17 +83,37 @@ async function login(req, res) {
 
     if (!isvalid) res.status(400).send({ message: "Password Salah" });
 
-    const payload = {
-      id: user.dataValues.id,
-    };
-    const token = jwt.sign(payload, "bhanu", { expiresIn: "1h" });
+    const generateToken = nanoid();
+
+    const tokenexits = await db.m_token.findOne({
+      where: { m_user_id: user.dataValues.id, valid: true },
+    });
+
+    console.log("token exist", tokenexits);
+
+    await db.m_token.update(
+      {
+        valid: false,
+      },
+      {
+        where: { m_user_id: user.dataValues.id },
+      }
+    );
+
+    const token = await db.m_token.create({
+      m_user_id: user.dataValues.id,
+      token: generateToken,
+      expired: moment().add(1, "days"),
+      valid: true,
+      status: "LOGIN",
+    });
 
     delete user.dataValues.password;
     const userExist = user.dataValues;
-    res.status(200).send({ message: "Login Sukses", userExist, token });
+    return res.status(200).send({ message: "Login Sukses", userExist, token });
   } catch (error) {
     console.log("error", error);
-    res.status(400).send(error);
+    return res.status(400).send(error);
   }
 }
 
