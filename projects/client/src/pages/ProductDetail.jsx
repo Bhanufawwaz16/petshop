@@ -22,6 +22,7 @@ import api from "../api/api";
 export default function ProductDetail() {
   const branchesGlobal = useSelector((state) => state.branch);
   const user = useSelector((state) => state.user);
+  console.log("user", user);
   const dispatch = useDispatch();
   const { productId } = useParams();
   const location = useLocation();
@@ -32,7 +33,7 @@ export default function ProductDetail() {
   //   const productPriceAfterDiscount = product.price
   //     ? product.price - getProductDiscountAmount(product.Vouchers)
   //     : 0;
-  const productStock = product?.Stocks?.[0]?.stock || 0;
+  const productStock = productDt?.m_stocks?.[0]?.stock || 0;
   const productBranch = product?.Stocks?.[0]?.Branch || {};
   const [quantity, setQuantity] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
@@ -43,12 +44,7 @@ export default function ProductDetail() {
       product_id: productId,
       user_id: userId,
       branch_id: branchId,
-      qty:
-        product.Vouchers.length > 0
-          ? product.Vouchers[0].voucher_type === "Buy One Get One"
-            ? quantity * 2
-            : quantity
-          : quantity,
+      qty: quantity,
     });
 
     // dispatch(fetchUserCart(user.id));
@@ -230,9 +226,9 @@ export default function ProductDetail() {
                 <button
                   onClick={() =>
                     addOne(
-                      product.id,
-                      user.id,
-                      branchesGlobal.selectedBranch.id
+                      productDt.id,
+                      user.id
+                      // branchesGlobal.selectedBranch.id
                     )
                   }
                   type="submit"

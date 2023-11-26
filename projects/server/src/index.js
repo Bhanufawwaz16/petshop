@@ -3,7 +3,12 @@ require("dotenv").config({ path: join(__dirname, "../.env") });
 const db = require("./models");
 const express = require("express");
 const cors = require("cors");
-const { authRouters, categoryRouters, productsRouters } = require("./routers");
+const {
+  authRouters,
+  categoryRouters,
+  productsRouters,
+  cartRouters,
+} = require("./routers");
 
 const PORT = process.env.PORT || 8000;
 
@@ -24,9 +29,10 @@ app.use(express.json());
 app.use("/static", express.static(join(__dirname, "..", "public")));
 // app.use("/api", authorize);
 
-app.use("/auth", authRouters);
+app.use("/api/auth", authRouters);
 app.use("/category", categoryRouters);
 app.use("/products", productsRouters);
+app.use("/api/cart", cartRouters);
 
 //#region API ROUTES
 // app.use("/auth", authRouters);

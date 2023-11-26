@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { errorAlertWithMessage, successAlert } from "../helper/alert";
 import { useNavigate } from "react-router-dom";
 import { login } from "../reducer/userSlice";
+import api from "../api/api";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -15,15 +16,15 @@ const Login = () => {
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      const res = await axios.post(`http://localhost:2000/auth/login`, {
+      const res = await api.post(`/auth/login`, {
         username: username,
         password: password,
       });
-      console.log("res.log", res.data.userExist);
+      console.log("res.log", res);
 
       dispatch(login(res.data.userExist));
-      localStorage.setItem("token", res.data.token);
-      
+      localStorage.setItem("token", res.data.token.token);
+
       if (res && res.data && res.data.userExist.m_role_id === 2) {
         // Jika m_role_id adalah 2, baru lakukan navigasi
         navigate("/dashboard/products");

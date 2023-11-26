@@ -9,6 +9,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      m_cart.belongsTo(models.m_products, {
+        foreignKey: "m_product_id",
+      });
     }
   }
   m_cart.init(
@@ -16,6 +19,10 @@ module.exports = (sequelize, DataTypes) => {
       m_product_id: DataTypes.INTEGER,
       m_user_id: DataTypes.INTEGER,
       qty: DataTypes.INTEGER,
+      flag_active: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: true,
+      },
     },
     {
       sequelize,

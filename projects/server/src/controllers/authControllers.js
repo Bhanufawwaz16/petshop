@@ -3,6 +3,8 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { nanoid } = require("nanoid");
 const moment = require("moment");
+const m_token = require("../models/m_token");
+const { Op } = require("sequelize");
 
 async function register(req, res) {
   try {
@@ -117,7 +119,37 @@ async function login(req, res) {
   }
 }
 
+async function getUserByToken(req, res) {
+  try {
+    console.log("req params", req.params);
+    const { token } = req.params;
+    console.log("token user", token);
+
+    const userToken = await db.m_token.findOne({
+      where: {
+        token: token,
+        valid: true,
+        expired: { [Op.gt]: moment() },
+      },
+    });
+
+    const findUser = await db.m_users.findOne({
+      where: { id: userToken.dataValues.m_user_id },
+    });
+
+    delete findUser.dataValues.password;
+
+    return res
+      .status(200)
+      .send({ message: "succesfully get user by token", user: findUser });
+  } catch (error) {
+    console.log("error", error);
+    return res.status(400).send(error);
+  }
+}
+
 module.exports = {
   register,
   login,
+  getUserByToken,
 };

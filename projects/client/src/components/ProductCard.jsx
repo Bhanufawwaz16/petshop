@@ -24,43 +24,39 @@ export default function ProductCard({
           to={`/product/${product.id}`}
           state={{ productDt: product }}
         >
-          <div className="shadow-md rounded-md border p-4 min-h-[460px] bg-white">
-            <div>
-              <div className="relative h-64 w-full overflow-hidden rounded-lg">
-                <img
-                  src={
-                    product && product.image_url.length > 0
-                      ? `http://localhost:2000/static/products/${product.image_url}`
-                      : BrokenImg
-                  }
-                  onError={({ currentTarget }) => {
-                    currentTarget.onerror = null;
-                    currentTarget.src = BrokenImg;
-                  }}
-                  alt="product"
-                  className="h-full w-full object-cover object-center"
-                />
-              </div>
-              <div className="relative mt-4">
-                <h3 className="text-sm font-medium text-gray-900 line-clamp-2">
-                  {product.name}
+          <div className="group relative">
+            <div className="min-h-80 aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-md bg-gray-200 group-hover:opacity-75 lg:aspect-none lg:h-80">
+              <img
+                src={
+                  `${process.env.REACT_APP_PRODUCT_IMG_BASE_URL}/${product.image_url}` ||
+                  BrokenImg
+                }
+                onError={({ currentTarget }) => {
+                  currentTarget.onerror = null;
+                  currentTarget.src = BrokenImg;
+                }}
+                alt="product"
+                className="h-full w-full object-cover object-center lg:h-full lg:w-full"
+              />
+            </div>
+            <div className="mt-4 flex justify-between">
+              <div>
+                <h3 className="text-sm text-gray-700">
+                  <a>
+                    <span aria-hidden="true" className="absolute inset-0" />
+                    {product.name}
+                  </a>
                 </h3>
+                <p className="mt-1 text-sm text-gray-500">{product.color}</p>
               </div>
-              <p className="relative text-lg font-semibold text-red-400 truncate">
+              <p className="text-sm font-medium text-gray-900">
                 {numToIDRCurrency(product.price)}
               </p>
-              {/* <ProductVoucherBadge product={product} /> */}
-              <div className="flex gap-1 items-center mt-2">
-                {/* <MapPinIcon className="w-3 h-3 text-gray-400" /> */}
-                <p className="text-sm text-gray-900">
-                  {product.m_stocks[0].stock}
-                </p>
-              </div>
             </div>
           </div>
         </Link>
       ))}
-         
+             
     </div>
   );
 }
