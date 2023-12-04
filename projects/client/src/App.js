@@ -12,6 +12,10 @@ import Inventory from "./pages/Inventory";
 import StockHistory from "./pages/StockHistory";
 import ProductList from "./pages/ProductList";
 import ProductDetail from "./pages/ProductDetail";
+import Cart from "./pages/Cart";
+import CheckOut from "./pages/CheckOut";
+
+
 
 function App() {
   return (
@@ -41,6 +45,24 @@ function App() {
             <>
               <Navbar />
               <ProductDetail />
+            </>
+          }
+        />
+        <Route
+          path="/cart"
+          element={
+            <>
+              <Navbar />
+              <Cart />
+            </>
+          }
+        />
+        <Route
+          path="/cart/checkout"
+          element={
+            <>
+              <Navbar />
+              <CheckOut />
             </>
           }
         />

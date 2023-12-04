@@ -21,6 +21,8 @@ import LogoIcon from "../assets/logoPutih.png";
 // Import Components
 import ListBox from "./subcomponents/ListBox";
 import api from "../api/api";
+import { logout } from "../reducer/userSlice";
+import { fetchCart } from "../reducer/cartSlice";
 // import { checkUserReferralVoucher } from "../helper/voucher";
 
 function classNames(...classes) {
@@ -32,6 +34,7 @@ export default function Navbar() {
   const [searchParams, setSearchParams] = useSearchParams();
   const user = useSelector((state) => state.user);
   const cart = useSelector((state) => state.cart);
+  console.log("cart coba", cart);
   const [userHasReferralVoucher, setUserHasReferralVoucher] = useState(false);
   const dispatch = useDispatch();
   let token = false;
@@ -41,30 +44,38 @@ export default function Navbar() {
 
   function handleLogout() {
     dispatch(logout());
-    dispatch(clearUserCart());
+    // dispatch(clearUserCart());
     localStorage.removeItem("token");
     navigate("/");
   }
 
+  const totalQty =
+    cart && cart.cart && cart.cart.length > 0
+      ? cart.cart.reduce((accumulator, currentItem) => {
+          return accumulator + currentItem.qty;
+        }, 0)
+      : null;
+
+  console.log("Total Qty in Cart:", totalQty);
   useEffect(() => {
     if (user.id) {
-      dispatch(fetchUserCart(user.id));
+      dispatch(fetchCart(user.id));
     }
   }, [user.id]);
 
-  useEffect(() => {
-    checkUserReferralVoucher(user.id)
-      .then((hasUserReferralVoucher) => {
-        setUserHasReferralVoucher(hasUserReferralVoucher);
-      })
-      .catch(() => null);
-  }, [navigate, user.id]);
+  // useEffect(() => {
+  //   checkUserReferralVoucher(user.id)
+  //     .then((hasUserReferralVoucher) => {
+  //       setUserHasReferralVoucher(hasUserReferralVoucher);
+  //     })
+  //     .catch(() => null);
+  // }, [navigate, user.id]);
 
   const navigation = [
     { name: "Home", href: "/", current: false },
     {
       name: "Products",
-      href: "/products",
+      href: "/product",
       current: false,
     },
   ];
@@ -109,9 +120,9 @@ export default function Navbar() {
                   />
                 </div>
               </Link>
-              <div className="flex justify-center items-center">
+              {/* <div className="flex justify-center items-center">
                 <ListBox />
-              </div>
+              </div> */}
 
               <div className="flex  flex-1 px-7">
                 <div className="w-full max-w-xl lg:max-w-2xl">
@@ -155,10 +166,10 @@ export default function Navbar() {
               {/* Navbar */}
               <div className="hidden lg:ml-4 lg:block">
                 <div className="flex flex-auto items-center relative">
-                  {cart.userCart > 0 ? (
+                  {totalQty ? (
                     <div className="absolute top-0 left-0 bg-yellow-400 rounded-full w-4 h-4 flex items-center justify-center text-xs text-red-800">
                       {" "}
-                      {cart.userCart}{" "}
+                      {totalQty}{" "}
                     </div>
                   ) : null}
                   <Link to="/cart">
@@ -375,10 +386,10 @@ export default function Navbar() {
                     </div>
                   </div>
                   <div className="relative">
-                    {cart.userCart > 0 ? (
+                    {cart && cart.qty && cart.qty.length ? (
                       <div className="absolute top-0 left-20 bg-yellow-400 rounded-full w-4 h-4 flex items-center justify-center text-xs text-red-800">
                         {" "}
-                        {cart.userCart}{" "}
+                        {cart.qty}{" "}
                       </div>
                     ) : null}
                     <Link to="/cart">

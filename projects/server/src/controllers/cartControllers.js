@@ -6,7 +6,7 @@ async function getCartByUser(req, res) {
     const user_id = req.params.user_id;
 
     const cartByUserId = await db.m_cart.findAll({
-      where: { m_user_id: user_id },
+      where: { m_user_id: user_id, flag_active: true },
       include: {
         model: db.m_products,
         attributes: ["id", "name", "price", "image_url"],
@@ -75,7 +75,49 @@ async function addToCart(req, res) {
   }
 }
 
+async function reduceCartOne(req, res) {
+  try {
+    console.log("res body", req.body);
+    const { product_id, qty } = req.body;
+    const user_id = parseInt(req.params.user_id);
+    console.log("user id", user_id);
+
+    const findUserCart = await db.m_cart.findOne({
+      where: { m_user_id: user_id, m_product_id: product_id },
+    });
+
+    if (!findUserCart)
+      return res.status(400).send({ message: "tidak ada produk" });
+
+    const currentQty = findUserCart.dataValues.qty;
+    const updateQty = currentQty - qty;
+
+    if (updateQty === 0) {
+      await db.m_cart.destroy({
+        where: { m_user_id: user_id, m_product_id: product_id },
+      });
+
+      return res
+        .status(200)
+        .send({ message: "produk anda sudah 0 maka akan dihapus" });
+    } else {
+      await db.m_cart.update(
+        { qty: updateQty },
+        {
+          where: { m_user_id: user_id, m_product_id: product_id },
+        }
+      );
+
+      return res.status(200).send({ message: "update qty succesfully" });
+    }
+  } catch (error) {
+    console.log("error", error);
+    return res.status(400).send(error);
+  }
+}
+
 module.exports = {
   addToCart,
   getCartByUser,
+  reduceCartOne,
 };
