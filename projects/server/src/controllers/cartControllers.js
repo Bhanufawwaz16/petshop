@@ -32,8 +32,12 @@ async function getCartByUser(req, res) {
 async function addToCart(req, res) {
   try {
     console.log("req body", req.body);
-    const { product_id, user_id, qty } = req.body;
 
+    const product_id = parseInt(req.body.product_id);
+    const user_id = parseInt(req.body.user_id);
+    const qty = parseInt(req.body.qty);
+    console.log("product id", product_id);
+    console.log("user id", user_id);
     if (!user_id)
       return res.status(400).send({ message: "Anda Harus Login Dahulu" });
 
@@ -51,7 +55,7 @@ async function addToCart(req, res) {
     });
     console.log("Find User Exist", findUserExist);
 
-    if (!findUserCart && !findUserExist) {
+    if (!findUserCart || !findUserExist) {
       const addNewProductCart = await db.m_cart.create({
         m_product_id: product_id,
         m_user_id: user_id,
