@@ -3,20 +3,68 @@ const db = require("../models");
 async function createTransaction(req, res) {
   try {
     console.log("req body transaction", req.body);
-    const { cart, selectedShippingOption, invoice } = req.body;
+    const { cart, invoice } = req.body;
+    const selectedShippingOption = parseInt(req.body.selectedShippingOption);
     const user_id = req.params.id;
 
     const totalPrice = cart.reduce((total, product) => {
-        // Pastikan properti price pada m_product adalah angka yang valid
-        const productPrice = product.m_product && typeof product.m_product.price === 'number' ? product.m_product.price : 0;
-      
-        return total + productPrice * product.qty;
-      }, 0);
-      console.log("total price", totalPrice);
-      
-      const transH=await db.m_transaction_headers.create({
-        m_user_id:user_id, total_price:totalPrice, date:new Date()
+      // Pastikan properti price pada m_product adalah angka yang valid
+      const productPrice =
+        product.m_product && typeof product.m_product.price === "number"
+          ? product.m_product.price
+          : 0;
+
+      return total + productPrice * product.qty;
+    }, 0);
+    console.log("total price", totalPrice);
+
+    const transH = await db.m_transaction_headers.create({
+      m_user_id: user_id,
+      total_price: totalPrice,
+      date: new Date(),
+      status: 1,
+      expedition_price: selectedShippingOption,
+      invoice: invoice,
+    });
+
+    const transD = await db.m_transaction_details.bulkCreate(
+      cart.map((product) => {
+        return {
+          m_transaction_header_id: transH.id,
+          m_product_id: product.m_product_id,
+          qty: product.qty,
+          product_name: product.m_product.name,
+          product_price: product.m_product.price,
+        };
       })
+    );
+
+    const stock = cart.map(async (product) => {
+      const currentStock = await db.m_stocks.findOne({
+        where: {
+          m_product_id: product.m_product.id,
+        },
+      });
+
+      await db.m_stock_history.create({
+        status: "IN",
+        qty: product.qty,
+        m_product_id: product.m_product_id,
+      });
+
+      await db.m_stocks.update(
+        {
+          stock: currentStock.stock - product.qty,
+        },
+        {
+          where: {
+            m_product_id: product.m_product_id,
+          },
+        }
+      );
+    });
+
+    res.status(200).send({ message: "Transaction Succesfully" });
   } catch (error) {
     console.log("error", error);
     return res.status(400).send(error);
