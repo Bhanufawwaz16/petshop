@@ -14,8 +14,7 @@ import ProductList from "./pages/ProductList";
 import ProductDetail from "./pages/ProductDetail";
 import Cart from "./pages/Cart";
 import CheckOut from "./pages/CheckOut";
-
-
+import OrderList from "./pages/OrderList";
 
 function App() {
   return (
@@ -63,6 +62,15 @@ function App() {
             <>
               <Navbar />
               <CheckOut />
+            </>
+          }
+        />
+        <Route
+          path="/order_list"
+          element={
+            <>
+              <Navbar />
+              <OrderList />
             </>
           }
         />

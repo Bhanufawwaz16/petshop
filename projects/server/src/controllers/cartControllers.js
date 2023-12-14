@@ -120,8 +120,28 @@ async function reduceCartOne(req, res) {
   }
 }
 
+async function deleteCart(req, res) {
+  try {
+    console.log("req body delete", req.body);
+    const { product_id } = req.body;
+    const user_id = req.params.id;
+
+    await db.m_cart.destroy({
+      where: {
+        m_user_id: user_id,
+        m_product_id: product_id,
+      },
+    });
+    return res.status(200).send({ message: "Delete Succes" });
+  } catch (error) {
+    console.log("error", error);
+    return res.status(400).send(error);
+  }
+}
+
 module.exports = {
   addToCart,
   getCartByUser,
   reduceCartOne,
+  deleteCart,
 };

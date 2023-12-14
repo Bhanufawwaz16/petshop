@@ -71,6 +71,30 @@ async function createTransaction(req, res) {
   }
 }
 
+async function getTransactionHead(req, res) {
+  try {
+    console.log("req query", req.query);
+
+    const page = parseInt(req.query.page);
+    const startDate =
+      req.query.startDate === "undefined" ? null : req.query.startDate;
+    const endDate =
+      req.query.endDate === "undefined" ? null : req.query.endDate;
+    const sortType = req.query.sort;
+    const itemsPerPage = 3;
+    const status = req.query.status;
+    const invoiceName = req.query.q;
+
+    const statusClause = status ? { status: status } : {};
+
+    return res.status(200).send({ message: "Get Trans Head Succesfully" });
+  } catch (error) {
+    console.log("error", error);
+    return res.status(400).send(error);
+  }
+}
+
 module.exports = {
   createTransaction,
+  getTransactionHead,
 };

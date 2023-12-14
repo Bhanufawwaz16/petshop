@@ -27,6 +27,7 @@ export default function CheckOut() {
   const [discountVoucher, setDiscountVoucher] = useState(0);
   const user = useSelector((state) => state.user);
   const cart = useSelector((state) => state.cart.cart);
+  console.log("cart checkout", cart);
   const voucherGlobal = useSelector((state) => state.voucher);
   const branchGlobal = useSelector((state) => state.branch);
   const dispatch = useDispatch();
@@ -154,7 +155,7 @@ export default function CheckOut() {
           await Promise.all(
             cart.map(async (cartItem) => {
               await api.delete("/cart/item/" + user.id, {
-                data: { product_id: cartItem.product_id },
+                data: { product_id: cartItem.m_product_id },
               });
             })
           );
