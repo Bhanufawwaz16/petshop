@@ -9,6 +9,7 @@ const {
   productsRouters,
   cartRouters,
   transactionRouters,
+  transactionHeaderRouters,
 } = require("./routers");
 
 const PORT = process.env.PORT || 8000;
@@ -35,6 +36,7 @@ app.use("/category", categoryRouters);
 app.use("/products", productsRouters);
 app.use("/api/cart", cartRouters);
 app.use("/api/transaction", transactionRouters);
+app.use("/api/transaction-header", transactionHeaderRouters);
 
 //#region API ROUTES
 // app.use("/auth", authRouters);

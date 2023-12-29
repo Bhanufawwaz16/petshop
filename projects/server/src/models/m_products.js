@@ -15,6 +15,10 @@ module.exports = (sequelize, DataTypes) => {
       m_products.belongsTo(models.m_category, {
         foreignKey: "m_category_id",
       });
+
+      // m_products.hasMany(models.m_transaction_details,{
+      //   foreignKey:"m_transaction_header_id"
+      // })
     }
   }
   m_products.init(

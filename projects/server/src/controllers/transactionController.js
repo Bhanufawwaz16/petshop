@@ -1,4 +1,5 @@
 const db = require("../models");
+const m_transaction_headers = require("../models/m_transaction_headers");
 
 async function createTransaction(req, res) {
   try {
@@ -74,7 +75,7 @@ async function createTransaction(req, res) {
 async function getTransactionHead(req, res) {
   try {
     console.log("req query", req.query);
-
+    const user_id = parseInt(req.params.id);
     const page = parseInt(req.query.page);
     const startDate =
       req.query.startDate === "undefined" ? null : req.query.startDate;
@@ -87,9 +88,71 @@ async function getTransactionHead(req, res) {
 
     const statusClause = status ? { status: status } : {};
 
-    return res.status(200).send({ message: "Get Trans Head Succesfully" });
+    const invoiceClause = invoiceName
+      ? { invoice: { [Op.like]: "%" + invoiceName + "%" } }
+      : {};
+    const dateClause =
+      !startDate && !endDate
+        ? {}
+        : { date: { [Op.between]: [startDate, endDate] } };
+
+    const offsetLimit = {};
+    if (page) {
+      offsetLimit.limit = itemsPerPage;
+      offsetLimit.offset = (page - 1) * itemsPerPage;
+    }
+
+    const sortMap = {
+      invoice_asc: [["invoice", "ASC"]],
+      invoice_desc: [["invoice", "DESC"]],
+      date_asc: [["date", "ASC"]],
+      date_desc: [["date", "DESC"]],
+    };
+
+    const result = await db.m_transaction_headers.findAndCountAll({
+      where: {
+        m_user_id: user_id,
+        ...statusClause,
+        ...invoiceClause,
+        ...dateClause,
+      },
+      include: [
+        {
+          model: db.m_transaction_details,
+          attributes: ["product_name", "qty"],
+          include: [
+            {
+              model: db.m_products,
+              attributes: ["image_url", "price", "id"],
+            },
+          ],
+        },
+        {
+          model: db.m_status,
+        },
+      ],
+      ...offsetLimit,
+      order: sortMap[sortType] || null,
+    });
+
+    const results = await db.m_transaction_headers.findAndCountAll({
+      where: {
+        m_user_id: user_id,
+        ...statusClause,
+        ...invoiceClause,
+        ...dateClause,
+      },
+    });
+
+    return res.status(200).send({
+      message: "Get Trans Head Succesfully",
+      data: {
+        Transaction_Header: result,
+        count: results,
+      },
+    });
   } catch (error) {
-    console.log("error", error);
+    console.log("error transaction", error);
     return res.status(400).send(error);
   }
 }
