@@ -10,6 +10,7 @@ const initialState = {
   gender: "",
   birthdate: "",
   m_role_id: 0,
+  role: "",
   addres: "",
 
   // role: "",
@@ -21,6 +22,7 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     login: (state, action) => {
+   
       state.id = action.payload.id;
       state.addres = action.payload.addres;
       state.gender = action.payload.gender;
@@ -30,6 +32,7 @@ export const userSlice = createSlice({
       state.email = action.payload.email;
       state.phone = action.payload.phone;
       state.m_role_id = action.payload.m_role_id;
+      state.role = action.payload.m_role.name;
     },
     logout: (state) => {
       return initialState;

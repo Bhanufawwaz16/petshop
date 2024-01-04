@@ -74,6 +74,8 @@ async function login(req, res) {
 
     const user = await db.m_users.findOne({
       where: { username: username },
+
+      include: { model: db.m_role },
     });
     console.log("user", user);
 

@@ -12,14 +12,29 @@ import {
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const navigation = [
-  { name: "Dashboard", path:"/dashboard", icon: HomeIcon, current: true },
-  { name: "Team", path: "#", icon: UsersIcon, current: false },
-  { name: "Product", path:"/dashboard/products", icon: FolderIcon, current: false },
-  { name: "Inventory", path:"/dashboard/inventory", icon: CalendarIcon, current: false },
-  { name: "Stock History", path:"/dashboard/stock-history", icon: InboxIcon, current: false },
+  { name: "Dashboard", path: "/dashboard", icon: HomeIcon, current: true },
+  { name: "Management", path: "/management", icon: UsersIcon, current: false },
+  {
+    name: "Product",
+    path: "/dashboard/products",
+    icon: FolderIcon,
+    current: false,
+  },
+  {
+    name: "Inventory",
+    path: "/dashboard/inventory",
+    icon: CalendarIcon,
+    current: false,
+  },
+  {
+    name: "Stock History",
+    path: "/dashboard/stock-history",
+    icon: InboxIcon,
+    current: false,
+  },
   { name: "Reports", path: "#", icon: ChartBarIcon, current: false },
 ];
 const userNavigation = [
@@ -34,6 +49,7 @@ function classNames(...classes) {
 
 export default function Sidebar({ element }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const currentPath = useLocation().pathname;
 
   return (
     <>
@@ -112,7 +128,7 @@ export default function Sidebar({ element }) {
                           key={item.name}
                           to={item.path}
                           className={classNames(
-                            item.current
+                            item.path == currentPath
                               ? "bg-indigo-800 text-white"
                               : "text-indigo-100 hover:bg-indigo-600",
                             "group flex items-center px-2 py-2 text-base font-medium rounded-md"
@@ -154,7 +170,7 @@ export default function Sidebar({ element }) {
                     key={item.name}
                     to={item.path}
                     className={classNames(
-                      item.current
+                      item.path == currentPath
                         ? "bg-indigo-800 text-white"
                         : "text-indigo-100 hover:bg-indigo-600",
                       "group flex items-center px-2 py-2 text-sm font-medium rounded-md"
@@ -259,11 +275,11 @@ export default function Sidebar({ element }) {
 
           <main>
             <div className="py-6">
-              <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
+              {/* <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
                 <h1 className="text-2xl font-semibold text-gray-900">
                   Dashboard
                 </h1>
-              </div>
+              </div> */}
               <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
                 {/* Replace with your content */}
                 {element}

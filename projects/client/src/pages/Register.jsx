@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { errorAlertWithMessage, successAlert } from "../helper/alert";
+import api from "../api/api";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -21,7 +22,7 @@ const Register = () => {
         addres: values.addres,
       };
       console.log("ini data", data);
-      const res = await axios.post(`http://localhost:2000/auth/register`, data);
+      const res = await api.post(`/auth/register`, data);
 
       successAlert(res.data.message);
       navigate("/login");

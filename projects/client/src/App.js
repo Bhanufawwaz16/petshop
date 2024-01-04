@@ -15,6 +15,7 @@ import ProductDetail from "./pages/ProductDetail";
 import Cart from "./pages/Cart";
 import CheckOut from "./pages/CheckOut";
 import OrderList from "./pages/OrderList";
+import Management from "./pages/Management";
 
 function App() {
   return (
@@ -79,6 +80,10 @@ function App() {
         <Route
           path="/dashboard"
           element={<Sidebar element={<Dashboard />} />}
+        />
+        <Route
+          path="/management"
+          element={<Sidebar element={<Management />} />}
         />
         <Route
           path="/dashboard/products"

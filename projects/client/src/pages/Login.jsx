@@ -25,7 +25,10 @@ const Login = () => {
       dispatch(login(res.data.userExist));
       localStorage.setItem("token", res.data.token.token);
 
-      if (res && res.data && res.data.userExist.m_role_id === 2) {
+      if (
+        (res && res.data && res.data.userExist.m_role_id === 2) ||
+        (res && res.data && res.data.userExist.m_role_id === 3)
+      ) {
         // Jika m_role_id adalah 2, baru lakukan navigasi
         navigate("/dashboard/products");
       } else if (res && res.data && res.data.userExist.m_role_id === 1) {
