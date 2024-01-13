@@ -37,7 +37,7 @@ const WarningModalOrderList = ({headersId, getUsersCart}) => {
   return (
     <Fragment>
         <div className='flex flex-col justify-center items-center'>
-            <button onClick={()=> setShowModal(true)} className='rounded-lg outline outline-2 outline-red-500 m-3 p-2 text-red-500 px-5 text-center hover:bg-slate-200 transition-all duration-300'>
+            <button onClick={()=> setShowModal(true)} className='rounded-lg outline outline-2 outline-blue-500 m-3 p-2 text-blue-500 px-5 text-center hover:bg-slate-200 transition-all duration-300'>
                 Cancel Order
             </button>
         </div>

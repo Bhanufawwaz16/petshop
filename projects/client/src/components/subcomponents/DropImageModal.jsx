@@ -46,13 +46,13 @@ const DropImageModal = ({ id, getUsersCart, usersCart }) => {
       <div className='flex flex-col justify-center items-center'>
         <button
           onClick={() => setShowModal(true)}
-          className='rounded-lg bg-red-500 m-3 py-2 text-white px-5 text-center hover:bg-red-600 hover:text-white transition-all duration-300'
+          className='rounded-lg bg-blue-500 m-3 py-2 text-white px-5 text-center hover:bg-blue-600 hover:text-white transition-all duration-300'
         >
           Upload Payment
         </button>
       </div>
       <Modal isVisible={showModal} onClose={() => setShowModal(false)}>
-        <h3 className='text-center font-bold text-red-500 text-3xl mt-3'>Upload Transfer Payment</h3>
+        <h3 className='text-center font-bold text-blue-500 text-3xl mt-3'>Upload Transfer Payment</h3>
         <p className='text-center my-3'>Are you sure you want to delete this item?</p>
         <div className='flex flex-col justify-center items-center'>
           <ImageDragAndDrop
@@ -60,7 +60,7 @@ const DropImageModal = ({ id, getUsersCart, usersCart }) => {
             image={image}
             setImage={setImage}
           />
-          <button onClick={updatePayment} className='my-3 items-center bg-red-500 rounded-lg text-white px-3 py-1'>Send Image</button>
+          <button onClick={updatePayment} className='my-3 items-center bg-blue-500 rounded-lg text-white px-3 py-1'>Send Image</button>
         </div>
        
       </Modal>

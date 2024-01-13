@@ -136,10 +136,20 @@ async function getUserByToken(req, res) {
     });
 
     const findUser = await db.m_users.findOne({
+      attributes: {
+        exclude: ["createdAt", "updateAt"],
+      },
       where: { id: userToken.dataValues.m_user_id },
+      include: [
+        {
+          model: db.m_role,
+          attributes: ["id", "name"],
+        },
+      ],
     });
 
     delete findUser.dataValues.password;
+    // console.log("findUser", findUser);
 
     return res
       .status(200)

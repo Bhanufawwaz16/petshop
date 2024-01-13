@@ -12,12 +12,14 @@ export default function HOC({ children }) {
 
   useEffect(() => {
     async function fetchUser() {
+      console.log("HOC jalan");
       try {
         const token = localStorage.getItem("token");
         setIsLoading(true);
         const user = await api
           .get("/auth/v1/" + token)
           .then((res) => res.data.user);
+        console.log("user", user);
         dispatch(login(user));
         setIsLoading(false);
       } catch (err) {

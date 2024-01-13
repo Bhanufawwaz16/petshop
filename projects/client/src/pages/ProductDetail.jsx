@@ -232,7 +232,7 @@ export default function ProductDetail() {
                     )
                   }
                   type="submit"
-                  className="flex w-full items-center justify-center rounded-md border border-transparent bg-red-500 py-3 px-8 text-base font-medium text-white hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 focus:ring-offset-gray-50 disabled:bg-gray-400 disabled:cursor-not-allowed"
+                  className="flex w-full items-center justify-center rounded-md border border-transparent bg-blue-500 py-3 px-8 text-base font-medium text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 focus:ring-offset-gray-50 disabled:bg-gray-400 disabled:cursor-not-allowed"
                   disabled={!productStock || !user.id}
                 >
                   Add to cart

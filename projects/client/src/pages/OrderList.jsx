@@ -140,7 +140,7 @@ const OrderList = () => {
       }}
     >
       <div className="container-screen flex flex-col py-4">
-        <div className="font-bold text-5xl py-2 border-b-2 border-b-red-300 mb-4">
+        <div className="font-bold text-5xl py-2 border-b-2 border-b-blue-300 mb-4">
           Order List
         </div>
         <div className="flex gap-2 items-center flex-wrap">
@@ -188,9 +188,9 @@ const OrderList = () => {
         {usersCart.length > 0 ? (
           usersCart.map((value) => (
             <div className="rounded-lg border mt-3 overflow-hidden bg-white">
-              <div className="bg-red-500 flex items-center justify-between">
+              <div className="bg-blue-500 flex items-center justify-between">
                 <div className="flex items-center">
-                  <ShoppingBagIcon className="h-9 w-9 py-1 pl-3 text-red-50" />
+                  <ShoppingBagIcon className="h-9 w-9 py-1 pl-3 text-blue-50" />
                   <p className="text-white mx-3">
                     <span className="text-yellow-300">
                       {convertToDate(value.date)}
@@ -236,7 +236,7 @@ const OrderList = () => {
               </div>
 
               <div className="flex items-center relative">
-                {/* <button className="rounded-lg bg-red-500 m-3 py-2 text-white px-5 text-center hover:bg-red-600 hover:text-white transition-all duration-300">
+                {/* <button className="rounded-lg bg-blue-500 m-3 py-2 text-white px-5 text-center hover:bg-blue-600 hover:text-white transition-all duration-300">
                   Upload Payment
                 </button> */}
                 {value.m_status.name === "Menunggu Pembayaran" ? (
@@ -260,7 +260,7 @@ const OrderList = () => {
                   <>
                     <button
                       onClick={() => finishOrder(value.id)}
-                      className="rounded-lg bg-red-500 m-3 py-2 text-white px-5 text-center hover:bg-red-600 hover:text-white transition-all duration-300"
+                      className="rounded-lg bg-blue-500 m-3 py-2 text-white px-5 text-center hover:bg-blue-600 hover:text-white transition-all duration-300"
                     >
                       Konfirmasi Pesanan
                     </button>

@@ -230,7 +230,7 @@ export default function CheckOut() {
       }}
     >
       <div className="mx-auto max-w-2xl px-4 pt-16 pb-24 sm:px-6 lg:max-w-7xl lg:px-8">
-        <h1 className="text-3xl font-bold tracking-tight text-red-500 sm:text-4xl">
+        <h1 className="text-3xl font-bold tracking-tight text-black-500 sm:text-4xl">
           Checkout
         </h1>
         <form
