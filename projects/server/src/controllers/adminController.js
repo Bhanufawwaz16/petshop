@@ -4,7 +4,17 @@ const bcrypt = require("bcrypt");
 async function getAdmin(req, res) {
   try {
     console.log("req params", req.params);
+    console.log("req query", req.query.page);
+
+    const itemsPerPage = 6;
+    const page = parseInt(req.query.page);
     const userRoleId = parseInt(req.params.id);
+
+    const offsetLimit = {};
+    if (page) {
+      offsetLimit.limit = itemsPerPage;
+      offsetLimit.offset = (page - 1) * itemsPerPage;
+    }
 
     if (userRoleId !== 3)
       return res.status(401).send({ message: "Unauthorized " });
@@ -12,6 +22,7 @@ async function getAdmin(req, res) {
     const userAdmin = await db.m_users.findAndCountAll({
       attributes: ["id", "email", "username"],
       where: { m_role_id: 2 },
+      ...offsetLimit,
       include: [
         {
           model: db.m_role,

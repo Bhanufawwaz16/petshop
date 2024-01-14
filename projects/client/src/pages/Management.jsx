@@ -8,26 +8,42 @@ import { login } from "../reducer/userSlice";
 import { errorAlertWithMessage, successAlert } from "../helper/alert";
 import Table from "../components/Table";
 import TableAdmin from "../components/TableAdmin";
+import Spinner from "../components/Spinner";
+import Pagination from "../components/Pagination";
+import { useSearchParams } from "react-router-dom";
+import { setLoading } from "../reducer/categorySlice";
 
 const Management = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [openModal, setOpenModal] = useState(false);
   const userGlobal = useSelector((state) => state.user);
   console.log("userGlobal", userGlobal);
   const dispatch = useDispatch();
 
+  const [refreshData, setRefreshData] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
   const [dataAdmin, setDataAdmin] = useState([]);
+  console.log("data admin", dataAdmin);
 
-  async function fetchAdminUser() {
-    const res = await api.get(`/admin/user/` + userGlobal.m_role_id);
+  async function fetchAdminUser(query) {
+    setIsLoading(true);
+    const res = await api.get(`/admin/user/${userGlobal.m_role_id}?${query}`);
     console.log("res fetch user", res);
     setDataAdmin(res.data.userAdmin);
+    setIsLoading(false);
   }
 
   useEffect(() => {
+    let query = `page=${currentPage}`;
+    query += `&${searchParams.toString}`;
+    setSearchParams(searchParams);
+
     if (userGlobal.role == "super admin") {
-      fetchAdminUser();
+      fetchAdminUser(query);
+      setRefreshData(false);
     }
-  }, [userGlobal]);
+  }, [userGlobal, searchParams, setSearchParams, currentPage, refreshData]);
 
   async function handleAddAdmin(e) {
     e.preventDefault();
@@ -39,12 +55,19 @@ const Management = () => {
         password: e.target.password.value,
       });
       console.log("res", res);
+      if (res.status == 200) {
+        setRefreshData(true);
+        setOpenModal(false);
+      }
       successAlert(res.data.message);
     } catch (error) {
       console.log("error", error);
       errorAlertWithMessage(error.response.data.message);
     }
   }
+
+  if (isLoading) return <Spinner />;
+
   return (
     <div>
       <ModalForm
@@ -64,8 +87,20 @@ const Management = () => {
         />
       </div>
       <Table
-        headCols={["Email", "Username"]}
-        // tableBody={<TableAdmin value={dataAdmin.rows} />}
+        className="mb-4"
+        headCols={["Email", "Username", "Role"]}
+        tableBody={
+          <TableAdmin
+            value={dataAdmin && dataAdmin.rows ? dataAdmin.rows : []}
+          />
+        }
+      />
+      <Pagination
+        itemsInPage={dataAdmin && dataAdmin.rows ? dataAdmin.rows.length : null}
+        totalItems={dataAdmin.count}
+        totalPages={Math.ceil(dataAdmin.count / 6)}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
       />
     </div>
   );
