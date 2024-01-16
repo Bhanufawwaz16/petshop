@@ -16,6 +16,9 @@ import Cart from "./pages/Cart";
 import CheckOut from "./pages/CheckOut";
 import OrderList from "./pages/OrderList";
 import Management from "./pages/Management";
+import SalesReport from "./pages/SalesReport";
+import Transaction from "./pages/Transactions";
+import Transactions from "./pages/Transactions";
 
 function App() {
   return (
@@ -90,12 +93,20 @@ function App() {
           element={<Sidebar element={<Products />} />}
         />
         <Route
-          path="/dashboard/inventory"
-          element={<Sidebar element={<Inventory />} />}
+          path="/dashboard/transactions"
+          element={<Sidebar element={<Transactions />} />}
         />
         <Route
-          path="/dashboard/stock-history"
-          element={<Sidebar element={<StockHistory />} />}
+          path="/dashboard/inventory/sales-report"
+          element={
+            <Sidebar element={<Inventory element={<SalesReport />} />} />
+          }
+        />
+        <Route
+          path="/dashboard/inventory/stock-history"
+          element={
+            <Sidebar element={<Inventory element={<StockHistory />} />} />
+          }
         />
       </Routes>
     </div>

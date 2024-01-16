@@ -13,6 +13,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
 import { Link, useLocation } from "react-router-dom";
+import { string } from "yup";
 
 const navigation = [
   { name: "Dashboard", path: "/dashboard", icon: HomeIcon, current: true },
@@ -24,17 +25,19 @@ const navigation = [
     current: false,
   },
   {
-    name: "Inventory",
-    path: "/dashboard/inventory",
-    icon: CalendarIcon,
-    current: false,
-  },
-  {
-    name: "Stock History",
-    path: "/dashboard/stock-history",
+    name: "Transactions",
+    path: "/dashboard/transactions",
     icon: InboxIcon,
     current: false,
   },
+  {
+    name: "Inventory",
+    path: "/dashboard/inventory/sales-report",
+    path2: "/dashboard/inventory/stock-history",
+    icon: CalendarIcon,
+    current: false,
+  },
+  
   { name: "Reports", path: "#", icon: ChartBarIcon, current: false },
 ];
 const userNavigation = [
@@ -128,7 +131,8 @@ export default function Sidebar({ element }) {
                           key={item.name}
                           to={item.path}
                           className={classNames(
-                            item.path == currentPath
+                            item.path == currentPath ||
+                              item.path2 == currentPath
                               ? "bg-indigo-800 text-white"
                               : "text-indigo-100 hover:bg-indigo-600",
                             "group flex items-center px-2 py-2 text-base font-medium rounded-md"
@@ -170,7 +174,8 @@ export default function Sidebar({ element }) {
                     key={item.name}
                     to={item.path}
                     className={classNames(
-                      item.path == currentPath
+                      item.path == currentPath ||
+                      item.path2 == currentPath
                         ? "bg-indigo-800 text-white"
                         : "text-indigo-100 hover:bg-indigo-600",
                       "group flex items-center px-2 py-2 text-sm font-medium rounded-md"
