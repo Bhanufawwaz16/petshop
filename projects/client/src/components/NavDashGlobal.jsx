@@ -7,7 +7,8 @@ import api from "../api/api";
 import pattern from "../assets/pattern.jpg";
 import Address from "../components/Address";
 import PopModel from "../components/subcomponents/PopModel";
-// import WaitingForPayment from "./subcomponents/TransactionWaitingForPayment";
+import TransactionWaitingForPayment from "./subcomponents/TransactionWaitingForPayment";
+
 // import WaitingForConfirm from "./subcomponents/TransactionWaitingForConfirmation";
 // import WaitingForDelivery from "./subcomponents/TransactionWaitingForDelivery";
 // import OnDelivery from "./subcomponents/TransactionOnDelivery";
@@ -85,7 +86,7 @@ export default function NavDashGlobal({ init }) {
         (tab) => tab.current && tab.name === "Waiting for Payment"
       ) && (
         <div className="flex flex-col justify-center items-center mx-10">
-          {/* <WaitingForPayment/> */}
+          <TransactionWaitingForPayment />
         </div>
       )}
       {tabs.find(
@@ -115,7 +116,6 @@ export default function NavDashGlobal({ init }) {
           {/* <OrderCanceled/> */}
         </div>
       )}
-      
     </div>
   );
 }

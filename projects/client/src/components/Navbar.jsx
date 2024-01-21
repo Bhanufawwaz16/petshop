@@ -312,7 +312,7 @@ export default function Navbar() {
                       <button
                         onClick={() => navigate("/login")}
                         type="button"
-                        className="w-32 h-auto flex-shrink-0 rounded-lg bg-transparen bg-blue-800 p-1 text-white  hover:bg-white transition-colors duration-300 ease-in-out hover:text-red-700"
+                        className="w-32 h-auto flex-shrink-0 rounded-lg bg-transparen bg-blue-800 p-1 text-white  hover:bg-white transition-colors duration-300 ease-in-out hover:text-blue-700"
                       >
                         Login
                       </button>
@@ -320,7 +320,7 @@ export default function Navbar() {
                       <button
                         onClick={() => navigate("/register")}
                         type="button"
-                        className="ml-2 h-auto w-32 flex-shrink-0 rounded-lg bg-blue-800 p-1 text-white hover:bg-white  transition-colors duration-300 ease-in-out hover:text-red-700 "
+                        className="ml-2 h-auto w-32 flex-shrink-0 rounded-lg bg-blue-800 p-1 text-white hover:bg-white  transition-colors duration-300 ease-in-out hover:text-blue-700 "
                       >
                         Register
                       </button>

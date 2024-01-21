@@ -9,4 +9,8 @@ transactionRouters.get(
   "/get_transaction/:id",
   transactionController.getTransactionHead
 );
+transactionRouters.get(
+  "/get_transactions",
+  transactionController.getTransactionHeaders
+);
 module.exports = transactionRouters;

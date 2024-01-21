@@ -10,7 +10,7 @@ export default function TransactionWaitingForPayment() {
               "Invoice No.",
               "Product",             
               "Date",
-              "Branch"
+              // "Branch"
             ]}
             tableBody={
               <TransactionTableBody

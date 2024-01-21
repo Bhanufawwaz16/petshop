@@ -157,7 +157,37 @@ async function getTransactionHead(req, res) {
   }
 }
 
+async function getTransactionHeaders(req, res) {
+  try {
+    const result = await db.m_transaction_headers.findAndCountAll({
+      include: [
+        {
+          model: db.m_transaction_details,
+          attributes: ["product_name", "qty"],
+          include: [
+            {
+              model: db.m_products,
+              attributes: ["image_url", "price"],
+            },
+          ],
+        },
+        {
+          model: db.m_status,
+        },
+      ],
+    });
+
+    return res
+      .status(200)
+      .send({ message: "Get Transaction Header Success", result });
+  } catch (error) {
+    console.log("error", error);
+    return res.status(400).send(error);
+  }
+}
+
 module.exports = {
   createTransaction,
   getTransactionHead,
+  getTransactionHeaders,
 };

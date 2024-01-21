@@ -47,7 +47,7 @@ const CategoryTab = ({ className }) => {
                 src={category.src}
                 alt={category.name}
               />
-              <h3 className="my-3 text-lg font-medium group-hover:text-red-500 transition-colors ease-in">
+              <h3 className="my-3 text-lg font-medium group-hover:text-blue-500 transition-colors ease-in">
                 {category.name}
               </h3>
             </div>
