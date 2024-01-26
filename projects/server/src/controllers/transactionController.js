@@ -172,6 +172,10 @@ async function getTransactionHeaders(req, res) {
           ],
         },
         {
+          model: db.m_users,
+          attributes: ["name", "addres", "phone"],
+        },
+        {
           model: db.m_status,
         },
       ],

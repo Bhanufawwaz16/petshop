@@ -7,7 +7,7 @@ import Modal from "./Modal";
 import ModalDetail from "../ModalDetail";
 import TransactionDetails from "../TransactionDetails";
 
-export default function TransactionTableBody() {
+export default function TransactionTableBody2() {
   const user = useSelector((state) => state.user);
   const [openModal, setOpenModal] = useState(false);
   const [transHead, setTransHead] = useState([]);
@@ -69,7 +69,10 @@ export default function TransactionTableBody() {
               </button>
             </td>
             <td>{convertToDate(value.date)}</td>
-            {/* <td className="text-center">{value.Branch.name}</td> */}
+            <td className="text-center">{value.m_user.name}</td>
+            <td className="text-center">{value.m_user.name}</td>
+            <td className="text-center">{value.m_user.phone}</td>
+            <td className="text-center">{value.m_user.addres}</td>
           </tr>
         ))}
       </tbody>
