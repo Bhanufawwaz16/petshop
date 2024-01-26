@@ -40,7 +40,7 @@ export default function TransactionTableBody() {
         <tr className="border-b-slate-200 border text-sm">
           <td className="px-3">INV/{value.invoice}</td>
           <td className="pr-6">
-            {value.m_transaction_details.product_name}
+            {value.m_transaction_details[0].product_name}
             <br />
             <button
               onClick={() => onDetails(value.id)}
@@ -54,7 +54,6 @@ export default function TransactionTableBody() {
           {/* <td className="text-center">{value.Branch.name}</td> */}
         </tr>
       ))}
-       
     </tbody>
   );
 }
