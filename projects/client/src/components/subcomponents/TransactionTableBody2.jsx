@@ -13,14 +13,13 @@ export default function TransactionTableBody2({
   button2,
   onClickBtn1,
   onClickBtn2,
+  action,
 }) {
   const user = useSelector((state) => state.user);
   const [openModal, setOpenModal] = useState(false);
   const [openModalImage, setOpenModalImage] = useState(false);
-  console.log("open modal image", openModalImage);
   const [transHead, setTransHead] = useState([]);
   const [transWaitingForPayment, setTrans] = useState([]);
-  console.log("transWaitingForPayment", transWaitingForPayment);
   const [detailData, setDetailData] = useState([]);
   const [imgPayment, setImgPayment] = useState();
   const navigate = useNavigate();
@@ -38,7 +37,7 @@ export default function TransactionTableBody2({
     if (user.role === "super admin" || user.role === "employe") {
       getTransHead();
     }
-  }, [user.role]);
+  }, [user.role, action]);
 
   useEffect(() => {
     const filter = transHead.filter((value) => {

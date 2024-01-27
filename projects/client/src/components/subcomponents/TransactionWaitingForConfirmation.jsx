@@ -11,45 +11,58 @@ import {
   successAlert,
 } from "../../helper/alert";
 import TransactionTableBody2 from "./TransactionTableBody2";
+
 export default function TransactionWaitingForConfirmation() {
   const user = useSelector((state) => state.user);
   const [transHead, setTransHead] = useState([]);
+  const [action, setAction] = useState(false);
+  console.log("action saat ini", action);
 
   const getTransHead = async () => {
     const result = await api.get("/transaction/get_transactions");
     setTransHead(result.data.result.rows);
+    setAction(false);
   };
 
   async function changeStatusToDeliver(transactionId) {
     try {
       const res = await api.patch(`/transaction/${transactionId}`, {
         status: "Diproses",
-        role: user.role
+        role: user.role,
       });
-      if (res.status === 200) successAlert("Order Delivered!");
-      getTransHead();
+      if (res.status === 200) {
+        setAction(true);
+        successAlert("Order Delivered!");
+      }
     } catch (err) {
-      errorAlert();
+      console.log("err", err);
+      errorAlertWithMessage(err.response.data.message);
     }
   }
 
-  function cancelOrder(transactionId) {
+  async function cancelOrder(transactionId) {
     deleteConfirmationAlert(() =>
       api
-        .patch(`/transactions/${transactionId}`, {
-          status: "Menunggu Pembayaran",
+        .patch(`/transaction/${transactionId}`, {
+          status: "Dibatalkan",
+          role: user.role,
         })
         .then((res) => {
-          if (res.status === 200) successAlert("Order Canceled!");
-          getTransHead();
+          if (res.status === 200) {
+            setAction(true); // Toggle the value
+            successAlert("Order Canceled!");
+          }
         })
         .catch((err) => errorAlertWithMessage(err.response.data.error))
     );
   }
 
   useEffect(() => {
-    getTransHead();
-  }, []);
+    if (action) {
+      console.log("test action");
+      getTransHead();
+    }
+  }, [action]);
 
   return (
     <div className="sm:flex sm:items-center">
@@ -72,6 +85,7 @@ export default function TransactionWaitingForConfirmation() {
             button2={"Cancel"}
             onClickBtn1={changeStatusToDeliver}
             onClickBtn2={cancelOrder}
+            action={action}
           />
         }
       />

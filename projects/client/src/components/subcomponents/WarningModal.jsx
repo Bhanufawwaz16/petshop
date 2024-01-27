@@ -15,7 +15,7 @@ const WarningModal = ({productId, user, generateCart}) => {
                 icon: "success",
                 title: result.data.message,
                 showConfirmButton: false,
-                timer: 1500,
+                timer: 3000,
               });
 
               setShowModal(false)
@@ -28,7 +28,7 @@ const WarningModal = ({productId, user, generateCart}) => {
                 icon: "error",
                 title: error.response.data.message,
                 showConfirmButton: false,
-                timer: 1500,
+                timer: 3000,
               });
     }
     }

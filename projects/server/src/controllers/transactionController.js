@@ -195,10 +195,34 @@ async function updateTransaction(req, res) {
     console.log("req query", req.body);
     console.log("req params id", req.params);
     const { status, role } = req.body;
+    console.log("role", role);
     const transHId = parseInt(req.params.id);
 
-    if (role !== "super admin" || role !== "employe")
+    if (role !== "super admin" && role !== "employe")
       return res.status(400).send({ message: "Unauthorized" });
+
+    const transHExist = await db.m_transaction_headers.findOne({
+      where: {
+        id: transHId,
+        status: 2,
+      },
+    });
+
+    if (!transHExist)
+      return res.status(400).send({ message: "Transaction Not Found" });
+
+    const statusId = await db.m_status.findOne({
+      where: { name: status },
+    });
+
+    await db.m_transaction_headers.update(
+      {
+        status: statusId.dataValues.id,
+      },
+      {
+        where: { id: transHExist.dataValues.id },
+      }
+    );
 
     return res.status(200).end();
   } catch (error) {

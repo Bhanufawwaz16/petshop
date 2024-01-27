@@ -5,7 +5,7 @@ function successAlert(message = "") {
     icon: "success",
     title: message,
     showConfirmButton: false,
-    timer: 2000,
+    timer: 3000,
   });
 }
 
