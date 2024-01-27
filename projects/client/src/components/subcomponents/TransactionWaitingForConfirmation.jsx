@@ -22,8 +22,9 @@ export default function TransactionWaitingForConfirmation() {
 
   async function changeStatusToDeliver(transactionId) {
     try {
-      const res = await api.patch(`/transactions/${transactionId}`, {
+      const res = await api.patch(`/transaction/${transactionId}`, {
         status: "Diproses",
+        role: user.role
       });
       if (res.status === 200) successAlert("Order Delivered!");
       getTransHead();
@@ -68,7 +69,7 @@ export default function TransactionWaitingForConfirmation() {
             transaction={transHead}
             status={"Menunggu Konfirmasi Pembayaran"}
             button1={"Process"}
-            button2={"Cancle"}
+            button2={"Cancel"}
             onClickBtn1={changeStatusToDeliver}
             onClickBtn2={cancelOrder}
           />

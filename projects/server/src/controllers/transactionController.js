@@ -190,8 +190,26 @@ async function getTransactionHeaders(req, res) {
   }
 }
 
+async function updateTransaction(req, res) {
+  try {
+    console.log("req query", req.body);
+    console.log("req params id", req.params);
+    const { status, role } = req.body;
+    const transHId = parseInt(req.params.id);
+
+    if (role !== "super admin" || role !== "employe")
+      return res.status(400).send({ message: "Unauthorized" });
+
+    return res.status(200).end();
+  } catch (error) {
+    console.log("error", error);
+    return res.status(400).send(error);
+  }
+}
+
 module.exports = {
   createTransaction,
   getTransactionHead,
   getTransactionHeaders,
+  updateTransaction,
 };

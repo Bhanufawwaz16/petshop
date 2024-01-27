@@ -13,4 +13,6 @@ transactionRouters.get(
   "/get_transactions",
   transactionController.getTransactionHeaders
 );
+
+transactionRouters.patch("/:id", transactionController.updateTransaction);
 module.exports = transactionRouters;
