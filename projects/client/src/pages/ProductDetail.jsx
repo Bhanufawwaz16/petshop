@@ -18,6 +18,7 @@ import BrokenImg from "../assets/broken-img.png";
 import Swal from "sweetalert2";
 import { errorAlertWithMessage } from "../helper/alert";
 import api from "../api/api";
+import { fetchCart, loadCart } from "../reducer/cartSlice";
 
 export default function ProductDetail() {
   const branchesGlobal = useSelector((state) => state.branch);
@@ -27,7 +28,6 @@ export default function ProductDetail() {
   const { productId } = useParams();
   const location = useLocation();
   const productDt = location.state.productDt;
-  console.log("productDT nih", productDt);
 
   const [product, setProduct] = useState({});
   //   const productPriceAfterDiscount = product.price
@@ -40,12 +40,18 @@ export default function ProductDetail() {
   const promo = document.getElementById("b1g1");
 
   const addOne = async (productId, userId, branchId) => {
-    const response = await api.post("/cart/", {
-      product_id: productId,
-      user_id: userId,
-      branch_id: branchId,
-      qty: quantity,
-    });
+    const status = true;
+    const response = await api.post(
+      "/cart/",
+      {
+        product_id: productId,
+        user_id: userId,
+        branch_id: branchId,
+        qty: quantity,
+      },
+      dispatch(loadCart(status))
+      // dispatch(fetchCart(user.id))
+    );
 
     // dispatch(fetchUserCart(user.id));
 

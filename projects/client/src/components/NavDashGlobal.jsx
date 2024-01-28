@@ -9,6 +9,8 @@ import Address from "../components/Address";
 import PopModel from "../components/subcomponents/PopModel";
 import TransactionWaitingForPayment from "./subcomponents/TransactionWaitingForPayment";
 import TransactionWaitingForConfirmation from "./subcomponents/TransactionWaitingForConfirmation";
+import TransactionWaitingForDelivery from "./subcomponents/TransactionWaitingForDelivery";
+import TransactionOnDelivery from "./subcomponents/TransactionOnDelivery";
 
 // import WaitingForConfirm from "./subcomponents/TransactionWaitingForConfirmation";
 // import WaitingForDelivery from "./subcomponents/TransactionWaitingForDelivery";
@@ -99,12 +101,12 @@ export default function NavDashGlobal({ init }) {
       )}
       {tabs.find((tab) => tab.current && tab.name === "In Process") && (
         <div className="flex flex-col justify-center items-center mx-10">
-          {/* <WaitingForDelivery/> */}
+          <TransactionWaitingForDelivery />
         </div>
       )}
       {tabs.find((tab) => tab.current && tab.name === "On Delivery") && (
         <div className="flex flex-col justify-center items-center mx-10">
-          {/* <OnDelivery/> */}
+          <TransactionOnDelivery />
         </div>
       )}
       {tabs.find((tab) => tab.current && tab.name === "Order Confirmed") && (

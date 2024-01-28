@@ -38,6 +38,7 @@ const sortBy = [
 const OrderList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const user = useSelector((state) => state.user);
+  console.log("user global", user);
   const [usersCart, setUsersCart] = useState([]);
   console.log("user Cart", usersCart);
   const [count, setCount] = useState();
@@ -98,8 +99,12 @@ const OrderList = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
+          console.log("user global 2", user);
           const result = await api.patch(
-            `/transaction/update_transaction/confirm/${value}`
+            `/transaction/update_transaction/confirm/${value}`,
+            {
+              username: user.username,
+            }
           );
           await Swal.fire({
             icon: "success",
@@ -256,7 +261,7 @@ const OrderList = () => {
                   <></>
                 )}
 
-                {value.status === "Dikirim" ? (
+                {value.m_status.name === "Dikirim" ? (
                   <>
                     <button
                       onClick={() => finishOrder(value.id)}

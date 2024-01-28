@@ -56,12 +56,15 @@ export default function Navbar() {
         }, 0)
       : null;
 
-  console.log("Total Qty in Cart:", totalQty);
+  console.log("total qty", totalQty);
+
+  console.log("load saat ini", cart.load);
   useEffect(() => {
     if (user.id) {
+      console.log("jalan load ya brow");
       dispatch(fetchCart(user.id));
     }
-  }, [user.id]);
+  }, [user.id, cart.load]);
 
   // useEffect(() => {
   //   checkUserReferralVoucher(user.id)

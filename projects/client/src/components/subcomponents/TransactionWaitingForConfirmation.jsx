@@ -16,7 +16,7 @@ export default function TransactionWaitingForConfirmation() {
   const user = useSelector((state) => state.user);
   const [transHead, setTransHead] = useState([]);
   const [action, setAction] = useState(false);
-  console.log("action saat ini", action);
+  const wantAction = "Menunggu Konfirmasi";
 
   const getTransHead = async () => {
     const result = await api.get("/transaction/get_transactions");
@@ -27,8 +27,9 @@ export default function TransactionWaitingForConfirmation() {
   async function changeStatusToDeliver(transactionId) {
     try {
       const res = await api.patch(`/transaction/${transactionId}`, {
-        status: "Diproses",
+        status: "Pesanan Dikonfirmasi",
         role: user.role,
+        wantAction: wantAction,
       });
       if (res.status === 200) {
         setAction(true);
@@ -86,6 +87,8 @@ export default function TransactionWaitingForConfirmation() {
             onClickBtn1={changeStatusToDeliver}
             onClickBtn2={cancelOrder}
             action={action}
+            setAction={setAction}
+            wantAction={wantAction}
           />
         }
       />

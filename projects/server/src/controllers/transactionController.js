@@ -194,17 +194,21 @@ async function updateTransaction(req, res) {
   try {
     console.log("req query", req.body);
     console.log("req params id", req.params);
-    const { status, role } = req.body;
+    const { status, role, wantAction } = req.body;
     console.log("role", role);
     const transHId = parseInt(req.params.id);
 
     if (role !== "super admin" && role !== "employe")
       return res.status(400).send({ message: "Unauthorized" });
 
+    const statusAction = await db.m_status.findOne({
+      where: { name: wantAction },
+    });
+
     const transHExist = await db.m_transaction_headers.findOne({
       where: {
         id: transHId,
-        status: 2,
+        status: statusAction.dataValues.id,
       },
     });
 
@@ -231,9 +235,32 @@ async function updateTransaction(req, res) {
   }
 }
 
+async function confirmTransaction(req, res) {
+  try {
+    console.log("req params", req.params);
+    console.log("req body", req.body);
+    const id = req.params.id;
+    const { username } = req.body;
+
+    const userExist = await db.m_users.findOne({
+      where: { username: username },
+    });
+
+    if (!userExist) return res.status(400).send({ message: "Unauthorized" });
+
+    await db.m_transaction_headers.update({ status: 7 }, { where: { id: id } });
+
+    return res.status(200).send({ message: "Confirm Transaction Succesfully" });
+  } catch (error) {
+    console.log("error", error);
+    return res.status(400).send(error);
+  }
+}
+
 module.exports = {
   createTransaction,
   getTransactionHead,
   getTransactionHeaders,
   updateTransaction,
+  confirmTransaction,
 };

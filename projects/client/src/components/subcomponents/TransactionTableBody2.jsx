@@ -14,6 +14,8 @@ export default function TransactionTableBody2({
   onClickBtn1,
   onClickBtn2,
   action,
+  setAction,
+  wantAction,
 }) {
   const user = useSelector((state) => state.user);
   const [openModal, setOpenModal] = useState(false);
@@ -37,11 +39,12 @@ export default function TransactionTableBody2({
     if (user.role === "super admin" || user.role === "employe") {
       getTransHead();
     }
+    setAction(false);
   }, [user.role, action]);
 
   useEffect(() => {
     const filter = transHead.filter((value) => {
-      return value.m_status.name === "Menunggu Konfirmasi";
+      return value.m_status.name === `${wantAction}`;
     });
     setTrans(filter);
   }, [transHead]);

@@ -8,6 +8,7 @@ const BASE_URL = "/cart";
 const initCart = {
   cart: [],
   isLoading: false,
+  load: false,
 };
 
 const cartSlice = createSlice({
@@ -20,10 +21,13 @@ const cartSlice = createSlice({
     setLoading(state, action) {
       return { ...state, isLoading: action.payload };
     },
+    setLoad(state, action) {
+      return { ...state, load: action.payload };
+    },
   },
 });
 
-export const { setCart, setLoading } = cartSlice.actions;
+export const { setCart, setLoading, setLoad } = cartSlice.actions;
 
 export function fetchCart(user_id) {
   return async (dispatch) => {
@@ -34,6 +38,18 @@ export function fetchCart(user_id) {
     } catch (error) {
       console.log("Error Fetch Cart", error);
       return error;
+    }
+  };
+}
+
+export function loadCart(status) {
+  return async (dispatch) => {
+    console.log("load cart jalan", loadCart);
+    console.log("status saat ini", status);
+    if (status) {
+      dispatch(setLoad(true)); // Memanggil dispatch untuk mengirimkan aksi ke Redux
+    } else {
+      dispatch(setLoad(false)); // Memanggil dispatch untuk mengirimkan aksi ke Redux
     }
   };
 }
