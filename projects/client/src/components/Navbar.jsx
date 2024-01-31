@@ -22,7 +22,7 @@ import LogoIcon from "../assets/logoPutih.png";
 import ListBox from "./subcomponents/ListBox";
 import api from "../api/api";
 import { logout } from "../reducer/userSlice";
-import { fetchCart } from "../reducer/cartSlice";
+import { fetchCart, loadCart } from "../reducer/cartSlice";
 // import { checkUserReferralVoucher } from "../helper/voucher";
 
 function classNames(...classes) {
@@ -63,6 +63,7 @@ export default function Navbar() {
     if (user.id) {
       console.log("jalan load ya brow");
       dispatch(fetchCart(user.id));
+      dispatch(loadCart(false));
     }
   }, [user.id, cart.load]);
 
@@ -78,7 +79,7 @@ export default function Navbar() {
     { name: "Home", href: "/", current: false },
     {
       name: "Products",
-      href: "/product",
+      href: "/products",
       current: false,
     },
   ];

@@ -1,19 +1,26 @@
 const db = require("../models");
 
 async function getProducts(req, res) {
-  console.log("produk", req.query);
+  console.log("produk get produk", req.query);
   try {
+    const ctgrId = parseInt(req.query.categoryId);
+
+    const categoryClause = ctgrId ? { m_category_id: ctgrId } : {};
+
     const products = await db.m_products.findAndCountAll({
-      where: {},
+      subQuery: false,
+      where: {
+        ...categoryClause,
+      },
       include: [
         {
           model: db.m_category,
           attributes: ["id", "name"],
         },
-        {
-          model: db.m_stocks,
-          attributes: ["id", "stock"],
-        },
+        // {
+        //   model: db.m_stocks,
+        //   attributes: ["id", "stock"],
+        // },
       ],
     });
 

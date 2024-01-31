@@ -244,35 +244,20 @@ export default function CheckOut() {
             {address ? (
               <div className="py-3">
                 <div className="grid grid-cols-2 w-full">
-                  <div>
+                  <div className="text-left">
                     <h1 className="mb-3">
                       <span className="text-xl font-semibold border-b-2">
                         Shipping Address
                       </span>
                     </h1>
-                    <p>
-                      <span className="font-medium mr-3 text-slate-600">
-                        Kota:
-                      </span>
-                      {address.kota}
+                    <p className="font-semibold mr-3 text-slate-600">
+                      {user.name}
                     </p>
-                    <p>
-                      <span className="font-medium mr-3 text-slate-600">
-                        Provinsi:
-                      </span>
-                      {address.provinsi}
+                    <p className="font-medium mr-3 text-slate-600">
+                      {user.addres}
                     </p>
-                    <p>
-                      <span className="font-medium mr-3 text-slate-600">
-                        Kecamatan:
-                      </span>
-                      {address.kecamatan}
-                    </p>
-                    <p>
-                      <span className="font-medium mr-3 text-slate-600">
-                        Kode Pos:
-                      </span>
-                      {address.kode_pos}
+                    <p className="font-medium mr-3 text-slate-600">
+                      {user.phone}
                     </p>
                   </div>
                   <div className="flex justify-end items-center">

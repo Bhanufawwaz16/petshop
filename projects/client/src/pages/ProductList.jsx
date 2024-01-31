@@ -7,44 +7,57 @@ import { useDispatch, useSelector } from "react-redux";
 import Spinner from "../components/Spinner";
 import { useSearchParams } from "react-router-dom";
 import { fetchProducts } from "../reducer/productSlice";
+import { fetchCategories } from "../reducer/categorySlice";
+
+const categoryOptions = [{ id: "", name: "None" }];
 
 const ProductList = () => {
   const dispatch = useDispatch();
 
   const productsGlobal = useSelector((state) => state.product);
-  console.log("product global list", productsGlobal);
+  const categoryGlobal = useSelector((state) => state.category);
 
   const [searchParams, setSearchParams] = useSearchParams();
   const [currentPage, setCurrentPage] = useState(1);
+  const [categoryFilter, setCategoryFilter] = useState(categoryOptions[0]);
+  console.log("category filter", categoryFilter);
+  
+  const newCategoryOption = categoryGlobal.categories.map((category) => ({
+    id: category.id,
+    name: category.name,
+  }));
+
+  categoryOptions.splice(1, categoryOptions.length - 1, ...newCategoryOption);
 
   useEffect(() => {
-    console.log("test loop");
+    dispatch(fetchCategories());
+  }, [dispatch]);
+
+  useEffect(() => {
     let query = `page=${currentPage}`;
     query += `&${searchParams.toString()}`;
+    categoryFilter.id
+      ? searchParams.set("categoryId", categoryFilter.id)
+      : searchParams.delete("categoryId");
 
+    query += `&${searchParams.toString()}`;
+    setSearchParams(searchParams);
     dispatch(fetchProducts(query));
-  }, [dispatch, currentPage]);
+  }, [dispatch, currentPage, categoryFilter.id]);
 
   if (productsGlobal.isLoading) return <Spinner />;
 
   return (
     <div className="container-screen">
-      {/* <FilterProductList>
+      <FilterProductList>
         <Comboboxes
-        // label="Sort"
-        // options={sortOptions}
-        // selectedValue={sortFilter}
-        // onChange={(s) => setSortFilter(s)}
-        // className="font-medium"
+          label="Category"
+          people={categoryOptions}
+          selectedValue={categoryFilter}
+          setSelectedValue={setCategoryFilter}
+          className="font-medium"
         />
-        <Comboboxes
-        // label="Category"
-        // options={categoryOptions}
-        // selectedValue={categoryFilter}
-        // onChange={(c) => setCategoryFilter(c)}
-        // className="font-medium"
-        />
-      </FilterProductList> */}
+      </FilterProductList>
       <ProductCard
         products={productsGlobal.product}
         isLoading={productsGlobal.isLoading}
