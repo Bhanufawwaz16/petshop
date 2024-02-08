@@ -34,7 +34,7 @@ export default function Navbar() {
   const [searchParams, setSearchParams] = useSearchParams();
   const user = useSelector((state) => state.user);
   const cart = useSelector((state) => state.cart);
-  console.log("cart coba", cart);
+
   const [userHasReferralVoucher, setUserHasReferralVoucher] = useState(false);
   const dispatch = useDispatch();
   let token = false;
@@ -56,12 +56,8 @@ export default function Navbar() {
         }, 0)
       : null;
 
-  console.log("total qty", totalQty);
-
-  console.log("load saat ini", cart.load);
   useEffect(() => {
     if (user.id) {
-      console.log("jalan load ya brow");
       dispatch(fetchCart(user.id));
       dispatch(loadCart(false));
     }

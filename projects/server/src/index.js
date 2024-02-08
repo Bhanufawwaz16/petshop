@@ -34,7 +34,7 @@ app.use("/static", express.static(join(__dirname, "..", "public")));
 
 app.use("/api/auth", authRouters);
 app.use("/category", categoryRouters);
-app.use("/products", productsRouters);
+app.use("/api/products", productsRouters);
 app.use("/api/cart", cartRouters);
 app.use("/api/transaction", transactionRouters);
 app.use("/api/transaction-header", transactionHeaderRouters);

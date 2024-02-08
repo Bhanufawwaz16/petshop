@@ -21,13 +21,11 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     login: (state, action) => {
-      console.log("action", action);
-
       state.id = action.payload.id;
       state.addres = action.payload.addres;
       state.birthdate = action.payload.birthdate;
       state.username = action.payload.username;
-      console.log("state username", state.username);
+
       state.name = action.payload.name;
       state.email = action.payload.email;
       state.phone = action.payload.phone;

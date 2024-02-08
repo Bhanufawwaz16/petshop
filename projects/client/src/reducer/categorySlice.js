@@ -36,7 +36,7 @@ export function fetchCategories(query = "") {
     try {
       dispatch(setLoading(true));
       const res = await axios.get(`http://localhost:2000${BASE_URL}`);
-      console.log("Ini Res", res);
+
       dispatch(
         setCategory({
           categories: res.data.category.rows,

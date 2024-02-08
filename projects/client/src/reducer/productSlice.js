@@ -6,6 +6,7 @@ import {
   errorAlertWithMessage,
   successAlert,
 } from "../helper/alert";
+import api from "../api/api";
 
 const BASE_URL = "/products";
 
@@ -34,9 +35,9 @@ export const { setProduct, setLoading } = productSlice.actions;
 export function fetchProducts(query) {
   return async (dispatch) => {
     try {
-      dispatch(setLoading(true))
-      const res = await axios.get(`http://localhost:2000${BASE_URL}?${query}`);
-      console.log("get produk", res);
+      dispatch(setLoading(true));
+      const res = await api.get(`${BASE_URL}?${query}`);
+      // console.log("get produk", res);
       dispatch(
         setProduct({
           product: res.data.products.rows,
@@ -44,7 +45,7 @@ export function fetchProducts(query) {
           totalPages: Math.ceil(res.data.products.count / 12),
         })
       );
-      dispatch(setLoading(false))
+      dispatch(setLoading(false));
     } catch (error) {
       console.log("error get produk", error);
     }
@@ -58,7 +59,7 @@ export function createProduct(data) {
       const res = await axios.post(`http://localhost:2000${BASE_URL}`, data);
       console.log("produk", res);
       successAlert(res.data.message);
-      return res
+      return res;
     } catch (error) {
       console.log("errorcreateproduct", error);
       errorAlertWithMessage(error.response.data.message);

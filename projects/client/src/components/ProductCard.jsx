@@ -12,7 +12,7 @@ export default function ProductCard({
   darkMode = false,
 }) {
   //   if (isLoading) return <ProductListSkeleton />;
-  console.log("products", products);
+
   if (!products.length && !isLoading)
     return darkMode ? <ProductNotFoundDark /> : <ProductNotFound />;
 

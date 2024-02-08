@@ -33,7 +33,7 @@ export function fetchCart(user_id) {
   return async (dispatch) => {
     try {
       const res = await api.get(`${BASE_URL}/${user_id}`);
-      console.log("Ini Res Patch Cart", res);
+
       dispatch(setCart(res.data.cartByUserId));
     } catch (error) {
       console.log("Error Fetch Cart", error);
@@ -44,8 +44,6 @@ export function fetchCart(user_id) {
 
 export function loadCart(status) {
   return async (dispatch) => {
-    console.log("load cart jalan", loadCart);
-    console.log("status saat ini", status);
     if (status) {
       dispatch(setLoad(true)); // Memanggil dispatch untuk mengirimkan aksi ke Redux
     } else {
