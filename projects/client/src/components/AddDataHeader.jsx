@@ -24,7 +24,7 @@ export default function AddDataHeader({
           {addButtonText}
         </button>
       </div>
-         
+      
     </div>
   );
 }

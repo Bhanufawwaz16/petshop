@@ -49,15 +49,15 @@ const ProductList = () => {
 
   categoryOptions.splice(1, categoryOptions.length - 1, ...newCategoryOption);
   useEffect(() => {
-    const initialCategory = categoryOptions.find(
+    const initialCategory = categoryOptions.findIndex(
       (c) => c.id === initialCategoryIdRef.current
     );
     console.log("initialCategory", initialCategory);
 
-    if (initialCategory) {
-      setCategoryFilter(initialCategory);
+    if (initialCategory > -1) {
+      setCategoryFilter(categoryOptions[initialCategory]);
     }
-  }, [initialCategoryIdRef]);
+  }, [categoryGlobal.length]);
 
   if (productsGlobal.isLoading) return <Spinner />;
 

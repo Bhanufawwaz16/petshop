@@ -17,10 +17,10 @@ async function getProducts(req, res) {
           model: db.m_category,
           attributes: ["id", "name"],
         },
-        // {
-        //   model: db.m_stocks,
-        //   attributes: ["id", "stock"],
-        // },
+        {
+          model: db.m_stocks,
+          attributes: ["id", "stock"],
+        },
       ],
     });
 
