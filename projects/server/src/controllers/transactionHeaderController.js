@@ -31,6 +31,16 @@ async function setTransImage(req, res) {
 async function getSalesReport(req, res) {
   try {
     console.log("function sales report");
+    console.log("req.query", req.query);
+
+    const startDate = req.query.startDate;
+    const endDate = req.query.endDate;
+
+    const clauseFilterByDate =
+      startDate && endDate
+        ? `AND mth.date BETWEEN "${startDate}" AND "${endDate}"`
+        : "";
+
     const data = await db.sequelize.query(
       `SELECT
         mth.id,
@@ -40,7 +50,8 @@ async function getSalesReport(req, res) {
         LEFT JOIN m_transaction_details mtd ON mth.id = mtd.m_transaction_header_id
         LEFT JOIN m_users mu ON mth.m_user_id = mu.id
         LEFT JOIN m_statuses ms ON mth.status = ms.id
-        WHERE mth.status != 1;`,
+        WHERE mth.status != 1
+        ${clauseFilterByDate};`,
 
       { type: Sequelize.QueryTypes.SELECT }
     );
