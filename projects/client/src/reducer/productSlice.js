@@ -56,7 +56,7 @@ export function createProduct(data) {
   console.log("datacreate", data);
   return async (dispatch) => {
     try {
-      const res = await axios.post(`http://localhost:2000${BASE_URL}`, data);
+      const res = await api.post(`${BASE_URL}`, data);
       console.log("produk", res);
       successAlert(res.data.message);
       return res;

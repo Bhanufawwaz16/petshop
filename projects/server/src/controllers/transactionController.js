@@ -48,7 +48,7 @@ async function createTransaction(req, res) {
       });
 
       await db.m_stock_history.create({
-        status: "IN",
+        status: "OUT",
         qty: product.qty,
         m_product_id: product.m_product_id,
       });

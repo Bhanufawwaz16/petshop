@@ -64,7 +64,39 @@ async function getSalesReport(req, res) {
   }
 }
 
+async function getStockHistory(req, res) {
+  try {
+    console.log("req query", req.query);
+    const startDate = req.query.startDate;
+    const endDate = req.query.endDate;
+
+    const clauseFilterByDate =
+      startDate && endDate
+        ? `AND msh.createdAt BETWEEN "${startDate}" AND "${endDate}"`
+        : "";
+
+    const data = await db.sequelize.query(
+      `SELECT 
+        mp.name, msh.status, msh.qty, msh.createdAt
+        FROM m_stock_histories msh
+        LEFT JOIN m_products mp ON msh.m_product_id = mp.id
+        ${clauseFilterByDate}
+        ORDER BY msh.createdAt DESC;`,
+
+      { type: Sequelize.QueryTypes.SELECT }
+    );
+
+    return res
+      .status(200)
+      .send({ message: "Succesfully get stock history", data });
+  } catch (error) {
+    console.log("error", error);
+    return res.status(400).send(error);
+  }
+}
+
 module.exports = {
   setTransImage,
   getSalesReport,
+  getStockHistory,
 };

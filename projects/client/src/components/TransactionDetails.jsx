@@ -22,7 +22,7 @@ export default function TransactionDetails({ detailData = [] }) {
   const getTransDet = async (transHeadId) => {
     try {
       const result = await api.get(`/transdet/${transHeadId}`);
-      // console.log("Result:", result.data.data.Transaction_Details);
+      console.log("Result:", result.data.data);
       setTransDet(result.data.data.Transaction_Details);
       setMessage(
         result.data.data.Transaction_Details[0].Transaction_Header.invoice
@@ -63,7 +63,7 @@ export default function TransactionDetails({ detailData = [] }) {
         <section className="rounded-lg border mt-3 overflow-hidden bg-white mb-20">
           <div className="bg-red-500 text-white p-3">
             <span className="font-semibold text-yellow-400">Invoice No : </span>{" "}
-            INV/{message}
+            INV/{detailData.invoice}
           </div>
           <div>
             {/* {detailData.map((value) => ( */}

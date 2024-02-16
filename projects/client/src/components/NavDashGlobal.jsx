@@ -11,6 +11,8 @@ import TransactionWaitingForPayment from "./subcomponents/TransactionWaitingForP
 import TransactionWaitingForConfirmation from "./subcomponents/TransactionWaitingForConfirmation";
 import TransactionWaitingForDelivery from "./subcomponents/TransactionWaitingForDelivery";
 import TransactionOnDelivery from "./subcomponents/TransactionOnDelivery";
+import TransactionDone from "./subcomponents/TransactionDone";
+import TransactionCanceled from "./subcomponents/TransactionCanceled";
 
 // import WaitingForConfirm from "./subcomponents/TransactionWaitingForConfirmation";
 // import WaitingForDelivery from "./subcomponents/TransactionWaitingForDelivery";
@@ -111,12 +113,12 @@ export default function NavDashGlobal({ init }) {
       )}
       {tabs.find((tab) => tab.current && tab.name === "Order Confirmed") && (
         <div className="flex flex-col justify-center items-center mx-10">
-          {/* <OrderDone/> */}
+          <TransactionDone />
         </div>
       )}
       {tabs.find((tab) => tab.current && tab.name === "Order Canceled") && (
         <div className="flex flex-col justify-center items-center mx-10">
-          {/* <OrderCanceled/> */}
+           <TransactionCanceled/> 
         </div>
       )}
     </div>
