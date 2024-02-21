@@ -10,4 +10,11 @@ productsRouter.post(
   ),
   productsController.createProducts
 );
+productsRouter.patch(
+  "/:id",
+  fileUploader({ destinationFolder: "products", prefix: "PING" }).single(
+    "product_image"
+  ),
+  productsController.updateProduct
+);
 module.exports = productsRouter;

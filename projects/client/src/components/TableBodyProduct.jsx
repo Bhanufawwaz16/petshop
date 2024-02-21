@@ -1,7 +1,12 @@
 import { numToIDRCurrency } from "../helper/currency";
 import BrokenImg from "../assets/broken-img.png";
 
-export default function TableBodyProduct({ products = [], onEdit, onDelete }) {
+export default function TableBodyProduct({
+  products = [],
+  onEdit,
+  setAction,
+  onDelete,
+}) {
   console.log("product mas lindhu", products);
   return (
     <tbody className="divide-y divide-gray-200 bg-white">
@@ -69,7 +74,10 @@ export default function TableBodyProduct({ products = [], onEdit, onDelete }) {
             <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
               <button
                 className="text-teal-600 hover:text-teal-900"
-                // onClick={() => onEdit(product, stockIdx)}
+                onClick={() => {
+                  onEdit(product);
+                  setAction("edit");
+                }}
               >
                 Edit<span className="sr-only">{product.name}</span>
               </button>

@@ -5,7 +5,11 @@ import ModalForm from "../components/ModalForm";
 import ProductsForm from "../components/ProductsForm";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCategories } from "../reducer/categorySlice";
-import { createProduct, fetchProducts } from "../reducer/productSlice";
+import {
+  createProduct,
+  fetchProducts,
+  updateProduct,
+} from "../reducer/productSlice";
 import { useParams, useSearchParams } from "react-router-dom";
 import TableBodyProduct from "../components/TableBodyProduct";
 import Spinner from "../components/Spinner";
@@ -19,6 +23,9 @@ const Products = () => {
 
   // console.log("openmodal", openModal);
   const [addNewData, setAddNewData] = useState(false);
+  const [dataEdit, setDataEdit] = useState();
+  console.log("data edit", dataEdit);
+  const [actionSend, setActionSend] = useState("");
   const [productEdit, setProductEdit] = useState();
   const [image, setImage] = useState(
     productEdit && productEdit.image_url
@@ -28,6 +35,7 @@ const Products = () => {
       : {}
   );
   const [productName, setProductName] = useState("");
+  console.log("product name", productName);
   const [stock, setStock] = useState(0);
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState(0);
@@ -36,9 +44,39 @@ const Products = () => {
   // console.log("Ini User", userGlobal);
   const categoryGlobal = useSelector((state) => state.category);
   const productGlobal = useSelector((state) => state.product);
-  console.log("tes", productGlobal);
+
   useEffect(() => {
-    console.log("tes");
+    if (actionSend == "edit" && dataEdit) {
+      setProductName(dataEdit && dataEdit.name ? dataEdit.name : "");
+      setDescription(
+        dataEdit && dataEdit.description ? dataEdit.description : ""
+      );
+      setPrice(dataEdit && dataEdit.price ? dataEdit.price : "");
+      setSelectedCategory(
+        dataEdit && dataEdit.m_category ? dataEdit.m_category : ""
+      );
+      setStock(dataEdit && dataEdit.m_stocks ? dataEdit.m_stocks[0].stock : 0);
+      setImage(
+        dataEdit && dataEdit.image_url
+          ? {
+              preview: `${process.env.REACT_APP_PRODUCT_IMG_BASE_URL}/${dataEdit.image_url}`,
+            }
+          : {}
+      );
+    }
+    if (!openModal) {
+      setProductName("");
+      setDescription("");
+      setPrice(0);
+      setSelectedCategory("");
+      setStock(0);
+      setImage({});
+      setDataEdit({});
+      setActionSend("");
+    }
+  }, [openModal, !openModal]);
+
+  useEffect(() => {
     dispatch(fetchProducts());
   }, [dispatch, addNewData]);
 
@@ -75,14 +113,30 @@ const Products = () => {
     newProduct.append("category", categoryid);
     newProduct.append("product_image", image);
 
-    dispatch(createProduct(newProduct)).then((res) => {
-      if (res && res.status === 200) {
-        setTimeout(() => {
-          setAddNewData(true);
-          setOpenModal(false);
-        }, 2000);
-      }
-    });
+    if (actionSend === "add") {
+      dispatch(createProduct(newProduct)).then((res) => {
+        if (res && res.status === 200) {
+          setTimeout(() => {
+            setAddNewData(true);
+            setOpenModal(false);
+          }, 2000);
+        }
+      });
+    } else if (actionSend === "edit") {
+      dispatch(updateProduct(newProduct, dataEdit.id)).then((res) => {
+        if (res && res.status === 200) {
+          setTimeout(() => {
+            setAddNewData(true);
+            setOpenModal(false);
+          }, 2000);
+        }
+      });
+    }
+  }
+
+  function handleEditClick(product) {
+    setDataEdit(product);
+    setOpenModal(true);
   }
 
   if (productGlobal.isLoading) return <Spinner />;
@@ -94,6 +148,7 @@ const Products = () => {
         open={openModal}
         setOpen={setOpenModal}
         action="Add"
+        actionSend={actionSend}
         onSubmit={handleSubmit}
         children={
           <ProductsForm
@@ -109,6 +164,7 @@ const Products = () => {
             image={image}
             setImage={setImage}
             setStock={setStock}
+            stock={stock}
           />
         }
       />
@@ -117,7 +173,10 @@ const Products = () => {
           title="Products"
           desc="List Products"
           addButtonText="Add Products"
-          onAddClick={() => setOpenModal(true)}
+          onAddClick={() => {
+            setOpenModal(true);
+            setActionSend("add");
+          }}
         />
       </div>
 
@@ -126,6 +185,8 @@ const Products = () => {
         headCols={["Nama Products", "Category", "Qty", "Desc", "stock"]}
         tableBody={
           <TableBodyProduct
+            onEdit={handleEditClick}
+            setAction={setActionSend}
             products={
               productGlobal && productGlobal.product
                 ? productGlobal.product

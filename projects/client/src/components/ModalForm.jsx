@@ -10,6 +10,7 @@ export default function ModalForm({
   action = "add",
   isLoading = false,
   children,
+  actionSend,
 }) {
   const cancelButtonRef = useRef(null);
 
@@ -65,7 +66,7 @@ export default function ModalForm({
                       type="submit"
                       className="inline-flex w-full justify-center rounded-md border border-transparent bg-amber-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 sm:col-start-2 sm:text-sm"
                     >
-                      {action === "add" ? "Add" : "Save"}
+                      {actionSend === "add" ? "Add" : "Update"}
                     </button>
                     {/* )} */}
                     <button

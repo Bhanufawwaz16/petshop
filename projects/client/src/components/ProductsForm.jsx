@@ -7,6 +7,7 @@ import ImageDragAndDrop from "./ImageDragAndDrop";
 
 export default function ProductsForm({
   action = "add",
+  dataEdit = {},
   isLoading = false,
   setShowForm,
   categoryOptions = [],
@@ -23,8 +24,8 @@ export default function ProductsForm({
   image,
   setImage,
   setStock,
+  stock,
 }) {
-  console.log("categori op", categoryOptions);
   return (
     <form
       className="space-y-8 divide-y divide-gray-200"
@@ -55,7 +56,7 @@ export default function ProductsForm({
                 id="productName"
                 className="block w-full min-w-0 flex-1 rounded-md border-gray-300 focus:border-orange-500 focus:ring-orange-500 sm:text-sm"
                 // defaultValue={product.name}
-                // value={productName}
+                value={productName}
                 onChange={(e) => {
                   setProductName(e.target.value);
                 }}
@@ -77,7 +78,7 @@ export default function ProductsForm({
                   name="desc"
                   rows={3}
                   className="block w-full rounded-md border-gray-300 shadow-sm focus:border-orange-500 focus:ring-orange-500 sm:text-sm"
-                  // defaultValue={product.desc}
+                  value={description}
                   onChange={(e) => {
                     setDescription(e.target.value);
                   }}
@@ -88,7 +89,7 @@ export default function ProductsForm({
               </p>
             </div>
 
-            <div className="sm:col-span-2 sm:col-start-1">
+            <div className="sm:col-span-3 sm:col-start-1">
               <label
                 htmlFor="category"
                 className="block text-sm font-medium text-gray-700"
@@ -117,7 +118,7 @@ export default function ProductsForm({
                 name="price"
                 id="price"
                 className="spin-hidden block w-full min-w-0 flex-1 rounded-md border-gray-300 focus:border-orange-500 focus:ring-orange-500 sm:text-sm"
-                // defaultValue={product.price}
+                value={price}
                 onChange={(e) => {
                   setPrice(e.target.value);
                 }}
@@ -138,7 +139,7 @@ export default function ProductsForm({
                 name="stock"
                 id="stock"
                 className="spin-hidden block w-full min-w-0 flex-1 rounded-md border-gray-300 focus:border-orange-500 focus:ring-orange-500 sm:text-sm"
-                defaultValue={product.Stocks?.[product.stockIdx]?.stock}
+                value={stock}
                 onChange={(e) => {
                   setStock(e.target.value);
                 }}

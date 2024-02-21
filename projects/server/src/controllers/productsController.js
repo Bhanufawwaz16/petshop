@@ -81,7 +81,18 @@ async function createProducts(req, res) {
   }
 }
 
+async function updateProduct(req, res) {
+  try {
+    console.log("req", req.body);
+    return res.status(200).send({ message: "" });
+  } catch (error) {
+    console.log("error", error);
+    return res.status(400).send(error);
+  }
+}
+
 module.exports = {
   getProducts,
   createProducts,
+  updateProduct,
 };
