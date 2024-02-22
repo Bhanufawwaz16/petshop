@@ -71,13 +71,28 @@ export function updateProduct(data, id) {
   console.log("datacreate", data);
   return async (dispatch) => {
     try {
-      const res = await api.patch(`${BASE_URL}/:${id}`, data);
+      const res = await api.patch(`${BASE_URL}/${id}`, data);
       console.log("produk", res);
       successAlert(res.data.message);
       return res;
     } catch (error) {
       console.log("error update product", error);
       errorAlertWithMessage(error.response.data.message);
+    }
+  };
+}
+
+export function deleteProduct(id) {
+  console.log("id", id);
+  return async (dispatch) => {
+    try {
+      const res = await api.delete(`${BASE_URL}/${id}`);
+      console.log("produk", res);
+      successAlert(res.data.message);
+      return res;
+    } catch (error) {
+      console.log("error delete product", error);
+      errorAlertWithMessage(error.response.id.message);
     }
   };
 }

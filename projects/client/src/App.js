@@ -19,6 +19,7 @@ import Management from "./pages/Management";
 import SalesReport from "./pages/SalesReport";
 import Transaction from "./pages/Transactions";
 import Transactions from "./pages/Transactions";
+import Schedule from "./pages/Schedule";
 
 function App() {
   return (
@@ -107,6 +108,10 @@ function App() {
           element={
             <Sidebar element={<Inventory element={<StockHistory />} />} />
           }
+        />
+        <Route
+          path="/dashboard/schedule"
+          element={<Sidebar element={<Schedule />} />}
         />
       </Routes>
     </div>

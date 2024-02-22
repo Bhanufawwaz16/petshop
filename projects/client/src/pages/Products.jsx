@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchCategories } from "../reducer/categorySlice";
 import {
   createProduct,
+  deleteProduct,
   fetchProducts,
   updateProduct,
 } from "../reducer/productSlice";
@@ -14,6 +15,7 @@ import { useParams, useSearchParams } from "react-router-dom";
 import TableBodyProduct from "../components/TableBodyProduct";
 import Spinner from "../components/Spinner";
 import Pagination from "../components/Pagination";
+import { deleteConfirmationAlert } from "../helper/alert";
 
 const Products = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -25,6 +27,7 @@ const Products = () => {
   const [addNewData, setAddNewData] = useState(false);
   const [dataEdit, setDataEdit] = useState();
   console.log("data edit", dataEdit);
+
   const [actionSend, setActionSend] = useState("");
   const [productEdit, setProductEdit] = useState();
   const [image, setImage] = useState(
@@ -134,6 +137,18 @@ const Products = () => {
     }
   }
 
+  function handleDeleteClick(productId) {
+    deleteConfirmationAlert(() =>
+      dispatch(deleteProduct(productId)).then((res) => {
+        if (res && res.status === 200) {
+          setTimeout(() => {
+            setAddNewData(true);
+          }, 1500);
+        }
+      })
+    );
+  }
+
   function handleEditClick(product) {
     setDataEdit(product);
     setOpenModal(true);
@@ -185,6 +200,7 @@ const Products = () => {
         headCols={["Nama Products", "Category", "Qty", "Desc", "stock"]}
         tableBody={
           <TableBodyProduct
+            onDelete={handleDeleteClick}
             onEdit={handleEditClick}
             setAction={setActionSend}
             products={

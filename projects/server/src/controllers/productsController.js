@@ -1,3 +1,4 @@
+const { where } = require("sequelize");
 const db = require("../models");
 
 async function getProducts(req, res) {
@@ -84,7 +85,65 @@ async function createProducts(req, res) {
 async function updateProduct(req, res) {
   try {
     console.log("req", req.body);
-    return res.status(200).send({ message: "" });
+    const productId = parseInt(req.params.id);
+    console.log("productId", productId);
+    const categoryId = parseInt(req.body.category);
+    console.log("category", categoryId);
+    const price = parseInt(req.body.price);
+    console.log("price", price);
+    const stock = parseInt(req.body.stockProduct);
+    console.log("stock", stock);
+    const description = req.body.description;
+    console.log("description", description);
+    const productName = req.body.productName;
+    console.log("productName", productName);
+
+    if (
+      !productName ||
+      !categoryId ||
+      !price ||
+      price < 0 ||
+      !stock ||
+      stock < 0 ||
+      !description
+    )
+      return res.status(400).send({ message: "please complete your data" });
+
+    const imagePath = req.file?.filename
+      ? { image_url: req.file.filename }
+      : {};
+    // if (!imagePath) return res.status(400).send({ message: "image required" });
+
+    await db.m_products.update(
+      {
+        name: productName,
+        ...(req.file ? { image_url: imagePath.image_url } : {}),
+        description: description,
+        m_category_id: categoryId,
+        price: price,
+      },
+      { where: { id: productId } }
+    );
+    await db.m_stocks.update(
+      { stock: stock },
+      { where: { m_product_id: productId } }
+    );
+
+    return res.status(200).send({ message: "Update Succesfully" });
+  } catch (error) {
+    console.log("error", error);
+    return res.status(400).send(error);
+  }
+}
+
+async function deleteProduct(req, res) {
+  try {
+    const productId = parseInt(req.params.id);
+    console.log("productId", productId);
+
+    await db.m_products.destroy({ where: { id: productId } });
+
+    return res.status(200).send({ message: "Delete Succesfully" });
   } catch (error) {
     console.log("error", error);
     return res.status(400).send(error);
@@ -95,4 +154,5 @@ module.exports = {
   getProducts,
   createProducts,
   updateProduct,
+  deleteProduct,
 };

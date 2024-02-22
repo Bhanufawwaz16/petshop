@@ -38,7 +38,7 @@ const navigation = [
     current: false,
   },
   
-  { name: "Reports", path: "#", icon: ChartBarIcon, current: false },
+  { name: "Schedule", path: "/dashboard/schedule", icon: ChartBarIcon, current: false },
 ];
 const userNavigation = [
   { name: "Your Profile", path: "#" },
