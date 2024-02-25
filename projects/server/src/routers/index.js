@@ -5,6 +5,7 @@ const cartRouters = require("./cartRouters");
 const transactionRouters = require("./transactionRouters");
 const transactionHeaderRouters = require("./transactionHeaderRouters");
 const adminRouters = require("./adminRouters");
+const userRouters = require("./userRouters");
 
 module.exports = {
   authRouters,
@@ -14,4 +15,5 @@ module.exports = {
   transactionRouters,
   transactionHeaderRouters,
   adminRouters,
+  userRouters,
 };
