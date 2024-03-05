@@ -6,12 +6,16 @@ import ModalForm from "../components/ModalForm";
 import ScheduleForm from "../components/ScheduleForm";
 import api from "../api/api";
 import { useSelector } from "react-redux";
+import { errorAlertWithMessage, successAlert } from "../helper/alert";
 
 const Schedule = () => {
   const userGlobal = useSelector((state) => state.user);
 
   const [openModal, setOpenModal] = useState(false);
   const [employe, setEmploye] = useState([]);
+  const [schedule, setSchedule] = useState([]);
+  const [pickDay, setPickDay] = useState("");
+  console.log("pickDay", pickDay);
   const [name, setName] = useState({});
   const [startDate, setStartDate] = useState();
   const [finishDate, setFinishDate] = useState();
@@ -20,27 +24,47 @@ const Schedule = () => {
 
   async function getEmploye() {
     const res = await api.get("/user");
+    console.log("res", res);
 
     setEmploye(res.data.employe);
   }
+  async function getSchedule() {
+    const resSchedule = await api.get("/user/schedule", {
+      params: {
+        date: pickDay,
+      },
+    });
+
+    setSchedule(resSchedule.data.schedule);
+    console.log("resSchedule", resSchedule);
+  }
   useEffect(() => {
     getEmploye();
-  }, [userGlobal]);
+    getSchedule();
+  }, [pickDay]);
 
-  async function handleSubmit() {
-    const employeName = name ? name.id : null;
+  async function handleSubmit(e) {
+    e.preventDefault();
+    const userId = name ? name.id : null;
     const timeIn = startTime ? startTime.name : null;
     const timeOut = endTime ? endTime.name : null;
     try {
       const res = await api.post("/user", {
-        name: employeName,
+        userId: userId,
         startDate: startDate,
         finishDate: finishDate,
         startTime: timeIn,
         endTime: timeOut,
       });
+      if (res.status === 200) {
+        setTimeout(() => {
+          setOpenModal(false);
+        }, 2000);
+      }
+      successAlert(res.data.message);
     } catch (error) {
       console.log("error", error);
+      errorAlertWithMessage(error.response.data.message);
     }
   }
 
@@ -83,7 +107,7 @@ const Schedule = () => {
         </button>
       </div>
 
-      <Calender />
+      <Calender schedule={schedule} setPickDay={setPickDay} />
     </div>
   );
 };
