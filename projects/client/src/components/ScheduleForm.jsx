@@ -27,6 +27,36 @@ export default function ScheduleForm({
   endTime,
   setEndTime,
 }) {
+  const isHidden = false;
+  const handleStartTimeChange = (selectedStartTime) => {
+    console.log("selectedStartTime", selectedStartTime);
+    // Set start time
+    setStartTime(selectedStartTime);
+
+    // Jika end time sama dengan start time, atur end time ke nilai default
+    if (selectedStartTime.name === "07:00") {
+      setEndTime(time[1]); // Atur ke nilai default atau sesuaikan dengan kebutuhan
+    } else if (selectedStartTime.name === "14:00") {
+      setEndTime({
+        id: 3,
+        name: "22:00",
+      });
+    }
+  };
+
+  const handleEndTimeChange = (selectedEndTime) => {
+    // Set end time
+    setEndTime(selectedEndTime);
+
+    // Jika end time sama dengan start time, atur start time ke nilai default
+    if (StartTime === selectedEndTime) {
+      setStartTime(""); // Atur ke nilai default atau sesuaikan dengan kebutuhan
+    }
+  };
+
+  const filteredEndTimes = time.filter(
+    ({ name }) => name > StartTime && name !== "22:00"
+  );
   return (
     <form
       className="space-y-8 divide-y divide-gray-200"
@@ -113,7 +143,7 @@ export default function ScheduleForm({
                 label="Start Time"
                 people={time}
                 selectedValue={StartTime}
-                setSelectedValue={setStartTime}
+                setSelectedValue={handleStartTimeChange}
                 className="text-sm rounded-md border-0 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-orange-600 sm:text-sm sm:leading-6"
               />
             </div>
@@ -127,9 +157,10 @@ export default function ScheduleForm({
               </label>
               <Comboboxes
                 label="End Time"
-                people={time}
+                people={filteredEndTimes}
                 selectedValue={endTime}
-                setSelectedValue={setEndTime}
+                setSelectedValue={handleEndTimeChange}
+                isInputDisabled={isHidden}
                 className="text-sm rounded-md border-0 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-orange-600 sm:text-sm sm:leading-6"
               />
             </div>

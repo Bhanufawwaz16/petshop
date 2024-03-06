@@ -22,7 +22,15 @@ export default function TransactionCanceled() {
     <div className="sm:flex sm:items-center">
       <Table
         className="mb-4"
-        headCols={["Invoice No.", "Product", "Date", "Branch", "Payment"]}
+        headCols={[
+          "Invoice No.",
+          "Product",
+          "Date",
+          "Payment",
+          "Name",
+          "Phone",
+          "Address",
+        ]}
         tableBody={
           <TransactionTableBody
             transaction={transHead}

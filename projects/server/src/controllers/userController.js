@@ -23,11 +23,13 @@ async function getSchedule(req, res) {
   try {
     const date = req.query.date;
     console.log("date", date);
+    
 
     const schedule = await db.sequelize.query(
-      `SELECT mu.username, ms.*
+      `SELECT mu.name, ms.*
         FROM m_schedules ms
-        LEFT JOIN m_users mu ON ms.m_user_id = mu.id;`,
+        LEFT JOIN m_users mu ON ms.m_user_id = mu.id
+        WHERE ms.date = "${date}";`,
 
       { type: Sequelize.QueryTypes.SELECT }
     );

@@ -7,6 +7,7 @@ import ScheduleForm from "../components/ScheduleForm";
 import api from "../api/api";
 import { useSelector } from "react-redux";
 import { errorAlertWithMessage, successAlert } from "../helper/alert";
+import { getTime, toISOString } from "date-fns";
 
 const Schedule = () => {
   const userGlobal = useSelector((state) => state.user);
@@ -22,26 +23,41 @@ const Schedule = () => {
   const [startTime, setStartTime] = useState();
   const [endTime, setEndTime] = useState();
 
+  useEffect(() => {
+    getEmploye();
+    if (pickDay) {
+      getSchedule();
+    }
+  }, [pickDay]);
+
   async function getEmploye() {
     const res = await api.get("/user");
     console.log("res", res);
 
     setEmploye(res.data.employe);
   }
+  console.log(pickDay instanceof Date);
   async function getSchedule() {
+    const pickDayDate = new Date(pickDay);
+    const year = pickDayDate.getFullYear();
+    const month = pickDayDate.getMonth() + 1; // Bulan dimulai dari 0, tambahkan 1 untuk mendapatkan bulan yang benar
+    const day = pickDayDate.getDate();
+
+    const formattedDate = `${year}-${month < 10 ? "0" : ""}${month}-${
+      day < 10 ? "0" : ""
+    }${day}`;
+
+    console.log("Formatted Date:", formattedDate);
+
     const resSchedule = await api.get("/user/schedule", {
       params: {
-        date: pickDay,
+        date: formattedDate,
       },
     });
 
     setSchedule(resSchedule.data.schedule);
     console.log("resSchedule", resSchedule);
   }
-  useEffect(() => {
-    getEmploye();
-    getSchedule();
-  }, [pickDay]);
 
   async function handleSubmit(e) {
     e.preventDefault();

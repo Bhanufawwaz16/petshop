@@ -110,7 +110,7 @@ export default function Calender({ schedule = [], setPickDay }) {
     <div>
       <h2 className="text-lg font-semibold text-gray-900">Upcoming meetings</h2>
       <div className="lg:grid lg:grid-cols-12 lg:gap-x-16">
-        <div className="mt-10 text-center lg:col-start-8 lg:col-end-13 lg:row-start-1 lg:mt-9 xl:col-start-9 md:divide-x md:divide-gray-200">
+        <div className="mt-10 text-center lg:col-start-8 lg:col-end-13 lg:row-start-1 lg:mt-9 xl:col-start-9 ">
           <div className="flex items-center">
             <h2 className="flex-auto font-semibold text-gray-900">
               {format(firstDayCurrentMonth, "MMMM yyyy")}
@@ -142,7 +142,7 @@ export default function Calender({ schedule = [], setPickDay }) {
             <div>S</div>
             <div>S</div>
           </div>
-          <div className="isolate mt-2 grid grid-cols-7 gap-px rounded-lg bg-gray-200 text-sm shadow ring-1 ring-gray-200">
+          <div className="isolate mt-2 grid grid-cols-7 gap-px rounded-lg text-sm shadow ring-1 ring-gray-200">
             {days.map((day, dayIdx) => (
               <div
                 key={day.toString()}
@@ -188,18 +188,18 @@ export default function Calender({ schedule = [], setPickDay }) {
               </div>
             ))}
           </div>
-          <button
+          {/* <button
             type="button"
             className="mt-8 w-full rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
           >
             Add event
-          </button>
+          </button> */}
         </div>
         <ol className="mt-4 divide-y divide-gray-100 text-sm leading-6 lg:col-span-7 xl:col-span-8">
           {schedule.map((meeting) => (
             <li
               key={meeting.id}
-              className="relative flex space-x-6 py-6 xl:static"
+              className="relative flex space-x-6 py-6 xl:static items-center"
             >
               <img
                 src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
@@ -207,49 +207,46 @@ export default function Calender({ schedule = [], setPickDay }) {
                 className="h-10 w-10 flex-none rounded-full"
               />
               <div className="flex-auto">
-                <h3 className="text-left pr-10 font-semibold text-gray-900 xl:pr-0">
-                  {meeting.username}
-                </h3>
-                <dl className="mt-2 flex flex-col text-gray-500 xl:flex-row">
-                  <div className="flex items-start space-x-3">
-                    <dt className="mt-0.5">
-                      <span className="sr-only">Date</span>
-                      <CalendarIcon
-                        className="h-5 w-5 text-gray-400"
-                        aria-hidden="true"
-                      />
-                    </dt>
-                    <dd>
-                      <time dateTime={meeting.date}>
-                        {convertToDate(meeting.date)}
-                      </time>
-                    </dd>
-                  </div>
-                  <div className="mt-2 flex items-start space-x-3 xl:mt-0 xl:ml-3.5 xl:border-l xl:border-gray-400 xl:border-opacity-50 xl:pl-3.5">
-                    <p className="mt-0.5">
-                      {console.log("Meeting time_start:", meeting.time_start)}
-                      <time dateTime={meeting.time_start}>
-                        {format(
-                          parse(meeting.time_start, "HH:mm:ss", new Date()),
-                          "h:mm a"
-                        ) || ""}
-                      </time>{" "}
-                      -{" "}
-                      <time dateTime={meeting.time_finish}>
-                        {format(
-                          parse(meeting.time_finish, "HH:mm:ss", new Date()),
-                          "h:mm a"
-                        ) || ""}
-                      </time>
-                    </p>
-                  </div>
-                </dl>
+                <p className="text-gray-900 text-left">{meeting.name}</p>
+                {/* <dl className="mt-2 flex flex-col text-gray-500 xl:flex-row"> */}
+                <div className="mt-2 flex items-start space-x-3 xl:mt-0 xl:border-l xl:border-gray-400 xl:border-opacity-50">
+                  {/* <div className="flex items-start space-x-3"> */}
+                  <p className="mt-0.5">
+                    <CalendarIcon
+                      className="h-5 w-5 text-gray-400"
+                      aria-hidden="true"
+                    />
+                  </p>
+                  <p className="mt-0.5">
+                    <time dateTime={meeting.date}>
+                      {convertToDate(meeting.date)}
+                    </time>
+                  </p>
+                  {/* </div> */}
+                  <p className="mt-0.5">
+                    {console.log("Meeting time_start:", meeting.time_start)}
+                    <time dateTime={meeting.time_start}>
+                      {format(
+                        parse(meeting.time_start, "HH:mm:ss", new Date()),
+                        "h:mm a"
+                      ) || ""}
+                    </time>{" "}
+                    -{" "}
+                    <time dateTime={meeting.time_finish}>
+                      {format(
+                        parse(meeting.time_finish, "HH:mm:ss", new Date()),
+                        "h:mm a"
+                      ) || ""}
+                    </time>
+                  </p>
+                </div>
+                {/* </dl> */}
               </div>
               <Menu
                 as="div"
                 className="absolute top-6 right-0 xl:relative xl:top-auto xl:right-auto xl:self-center"
               >
-                <div>
+                {/* <div>
                   <Menu.Button className="-m-2 flex items-center rounded-full p-2 text-gray-500 hover:text-gray-600">
                     <span className="sr-only">Open options</span>
                     <EllipsisHorizontalIcon
@@ -257,7 +254,7 @@ export default function Calender({ schedule = [], setPickDay }) {
                       aria-hidden="true"
                     />
                   </Menu.Button>
-                </div>
+                </div> */}
 
                 <Transition
                   as={Fragment}
