@@ -23,6 +23,7 @@ export default function CheckOut() {
     { id: 3, service: "SiCepat", cost: 20000, days: "1-2 days" },
   ]);
   const [selectedShippingOption, setSelectedShippingOption] = useState("0");
+  console.log("selected option", selectedShippingOption);
   const [voucher, setVoucher] = useState([]);
   const [discountVoucher, setDiscountVoucher] = useState(0);
   const user = useSelector((state) => state.user);
@@ -355,12 +356,12 @@ export default function CheckOut() {
                     {numToIDRCurrency(calculateTotalPrice())}
                   </dd>
                 </div>
-                <div className="flex items-center justify-between">
+                {/* <div className="flex items-center justify-between">
                   <dt className="text-sm text-gray-600">Courier</dt>
                   <dd className="text-sm font-medium text-gray-900" id="jne">
                     Jalur Nugraha Ekakurir (JNE)
                   </dd>
-                </div>
+                </div> */}
                 <div className="flex items-center justify-between">
                   <dt className="text-sm text-gray-600">Service</dt>
                   <dd className="text-sm font-medium text-gray-900" id="jne">
@@ -383,14 +384,14 @@ export default function CheckOut() {
                   </dd>
                 </div>
 
-                <div className="flex items-center justify-between">
+                {/* <div className="flex items-center justify-between">
                   <dt className="text-sm text-gray-600">Product Discount</dt>
                   <dd className="text-sm font-medium text-gray-900">
                     - {numToIDRCurrency(discountVoucher)}
                   </dd>
-                </div>
+                </div> */}
 
-                <div className="flex items-center justify-between">
+                {/* <div className="flex items-center justify-between">
                   <dt className="text-sm text-gray-600">Users Voucher</dt>
                   <dd className="text-sm font-medium text-gray-900">
                     <select className="block w-full appearance-none rounded-md border border-gray-300 pl-3 pr-8 py-2 placeholder-gray-400 shadow-sm focus:border-orange-500 focus:outline-none focus:ring-orange-500 sm:text-sm">
@@ -410,7 +411,7 @@ export default function CheckOut() {
                       })}
                     </select>
                   </dd>
-                </div>
+                </div> */}
 
                 <div className="flex items-center justify-between border-t border-gray-200 pt-4">
                   <dt className="text-base font-medium text-gray-900">

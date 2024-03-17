@@ -53,6 +53,8 @@ const Management = () => {
         email: e.target.email.value,
         username: e.target.username.value,
         password: e.target.password.value,
+        name: e.target.name.value,
+        salary: e.target.salary.value,
       });
       console.log("res", res);
       if (res.status == 200) {
@@ -88,7 +90,7 @@ const Management = () => {
       </div>
       <Table
         className="mb-4"
-        headCols={["Email", "Username", "Role"]}
+        headCols={["Email", "Username", "Role", "Salary"]}
         tableBody={
           <TableAdmin
             value={dataAdmin && dataAdmin.rows ? dataAdmin.rows : []}

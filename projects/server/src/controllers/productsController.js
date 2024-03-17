@@ -4,9 +4,18 @@ const db = require("../models");
 async function getProducts(req, res) {
   console.log("produk get produk", req.query);
   try {
+    const itemsPerPage = 12;
     const ctgrId = parseInt(req.query.categoryId);
+    const page = parseInt(req.query.page);
+    console.log("page product", page);
 
     const categoryClause = ctgrId ? { m_category_id: ctgrId } : {};
+    const offsetLimit = {};
+    if (page) {
+      offsetLimit.limit = itemsPerPage;
+      offsetLimit.offset = (page - 1) * itemsPerPage;
+    }
+    console.log("offSetLimit", offsetLimit);
 
     const products = await db.m_products.findAndCountAll({
       subQuery: false,
@@ -23,8 +32,9 @@ async function getProducts(req, res) {
           attributes: ["id", "stock"],
         },
       ],
+      ...offsetLimit,
     });
-
+    // console.log("product data", products);
     res.status(200).send({
       message: "succesfully get data product",
       products,

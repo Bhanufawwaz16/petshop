@@ -30,6 +30,32 @@ export default function FormAddAdmin({ category = {} }) {
         className="block w-full min-w-0 flex-1 rounded-md border-gray-300 focus:border-amber-500 focus:ring-amber-500 sm:text-sm"
       />
       <label
+        htmlFor="name"
+        className="block text-sm font-medium text-gray-700 mb-2"
+      >
+        Name
+      </label>
+      <input
+        type="text"
+        name="name"
+        id="name"
+        // defaultValue={category.email || ""}
+        className="block w-full min-w-0 flex-1 rounded-md border-gray-300 focus:border-amber-500 focus:ring-amber-500 sm:text-sm"
+      />
+      <label
+        htmlFor="salary"
+        className="block text-sm font-medium text-gray-700 mb-2"
+      >
+        Salary
+      </label>
+      <input
+        type="number"
+        name="salary"
+        id="salary"
+        // defaultValue={category.email || ""}
+        className="block w-full min-w-0 flex-1 rounded-md border-gray-300 focus:border-amber-500 focus:ring-amber-500 sm:text-sm"
+      />
+      <label
         htmlFor="password"
         className="block text-sm font-medium text-gray-700 mb-2"
       >
@@ -42,7 +68,6 @@ export default function FormAddAdmin({ category = {} }) {
         // defaultValue={category.email || ""}
         className="block w-full min-w-0 flex-1 rounded-md border-gray-300 focus:border-amber-500 focus:ring-amber-500 sm:text-sm"
       />
-      
          
     </div>
   );

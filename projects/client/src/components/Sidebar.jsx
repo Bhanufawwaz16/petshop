@@ -15,6 +15,7 @@ import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
 import { Link, useLocation } from "react-router-dom";
 import { string } from "yup";
 import logo from "../assets/logoFullWhite_sidebar.png";
+import { useSelector } from "react-redux";
 
 const navigation = [
   { name: "Dashboard", path: "/dashboard", icon: HomeIcon, current: true },
@@ -59,6 +60,12 @@ function classNames(...classes) {
 export default function Sidebar({ element }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const currentPath = useLocation().pathname;
+  const userGlobal = useSelector((state) => state.user);
+
+  const modifiedNavigation =
+    userGlobal.role === "employe"
+      ? navigation.filter((item) => item.name !== "Management")
+      : navigation;
 
   return (
     <>
@@ -128,7 +135,7 @@ export default function Sidebar({ element }) {
                   </div>
                   <div className="mt-5 h-0 flex-1 overflow-y-auto">
                     <nav className="space-y-1 px-2">
-                      {navigation.map((item) => (
+                      {modifiedNavigation.map((item) => (
                         <Link
                           key={item.name}
                           to={item.path}
@@ -167,7 +174,7 @@ export default function Sidebar({ element }) {
             </div>
             <div className="mt-5 flex flex-1 flex-col">
               <nav className="flex-1 space-y-1 px-2 pb-4">
-                {navigation.map((item) => (
+                {modifiedNavigation.map((item) => (
                   <Link
                     key={item.name}
                     to={item.path}

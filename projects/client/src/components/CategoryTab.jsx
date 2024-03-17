@@ -7,7 +7,7 @@ import Plumbing from "../assets/plumbing.png";
 
 const selectedCategories = [
   {
-    name: "CAT FOOD FRESHPACK",
+    name: "MAKANAN HEWAN",
     src: Building,
     id: 1,
   },
@@ -38,7 +38,7 @@ const CategoryTab = ({ className }) => {
         {selectedCategories.map((category, idx) => (
           <Link
             key={category.id}
-            to={`/products?categoryId=${category.id}` }
+            to={`/products?categoryId=${category.id}`}
             className="hover:-translate-y-1 transition-transform ease-in flex-shrink-0 group"
           >
             <div className="rounded-full flex flex-col items-center">

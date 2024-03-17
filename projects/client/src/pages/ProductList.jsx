@@ -14,16 +14,14 @@ const categoryOptions = [{ id: 0, name: "None" }];
 const ProductList = () => {
   const dispatch = useDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
-
   const userGlobal = useSelector((state) => state.user);
   const productsGlobal = useSelector((state) => state.product);
+  console.log("productGlobal", productsGlobal);
   const categoryGlobal = useSelector((state) => state.category.categories);
-  console.log("catgeory global", categoryGlobal);
   const [categoryFilter, setCategoryFilter] = useState(categoryOptions[0]);
-  console.log("category filter", categoryFilter);
   const [currentPage, setCurrentPage] = useState(1);
+  console.log("current page", currentPage);
   const initialCategoryIdRef = useRef(parseInt(searchParams.get("categoryId")));
-  console.log("initialCategoryIdRef", initialCategoryIdRef);
 
   useEffect(() => {
     if (userGlobal.role) {
@@ -52,7 +50,6 @@ const ProductList = () => {
     const initialCategory = categoryOptions.findIndex(
       (c) => c.id === initialCategoryIdRef.current
     );
-    console.log("initialCategory", initialCategory);
 
     if (initialCategory > -1) {
       setCategoryFilter(categoryOptions[initialCategory]);

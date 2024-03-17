@@ -61,6 +61,9 @@ export default function Navbar() {
       dispatch(fetchCart(user.id));
       dispatch(loadCart(false));
     }
+    if (user.role === "employe") {
+      handleLogout();
+    }
   }, [user.id, cart.load]);
 
   // useEffect(() => {
@@ -242,7 +245,7 @@ export default function Navbar() {
                                 </Link>
                               )}
                             </Menu.Item>
-                            {user.role !== "user" && (
+                            {user.role === "super admin" ? (
                               <Menu.Item>
                                 {({ active }) => (
                                   <Link
@@ -252,11 +255,11 @@ export default function Navbar() {
                                       "block px-4 py-2 text-sm text-gray-700 text-center"
                                     )}
                                   >
-                                    Dashboard
+                                    Dashboard 2
                                   </Link>
                                 )}
                               </Menu.Item>
-                            )}
+                            ) : null}
 
                             <Menu.Item>
                               {({ active }) => (
@@ -271,25 +274,7 @@ export default function Navbar() {
                                 </Link>
                               )}
                             </Menu.Item>
-                            {!(
-                              userHasReferralVoucher ||
-                              user.role === "superadmin" ||
-                              user.role === "admin"
-                            ) && (
-                              <Menu.Item>
-                                {({ active }) => (
-                                  <Link
-                                    to="/referral-code"
-                                    className={classNames(
-                                      active ? "bg-gray-100" : "",
-                                      "block px-4 py-2 text-sm text-gray-700 text-center"
-                                    )}
-                                  >
-                                    Referral Code
-                                  </Link>
-                                )}
-                              </Menu.Item>
-                            )}
+
                             <Menu.Item>
                               {({ active }) => (
                                 <button

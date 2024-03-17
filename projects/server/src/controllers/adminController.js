@@ -20,7 +20,7 @@ async function getAdmin(req, res) {
       return res.status(401).send({ message: "Unauthorized " });
 
     const userAdmin = await db.m_users.findAndCountAll({
-      attributes: ["id", "email", "username"],
+      attributes: ["id", "email", "username", "salary"],
       where: { m_role_id: 2 },
       ...offsetLimit,
       include: [
@@ -41,9 +41,9 @@ async function getAdmin(req, res) {
 async function addAdmin(req, res) {
   try {
     console.log("req body", req.body);
-    const { email, username, password } = req.body;
+    const { email, username, name, password, salary } = req.body;
 
-    if (!email || !username || !password)
+    if (!email || !username || !password || !name || !salary)
       return res.status(400).send({ message: "please completed your data" });
 
     const userExist = await db.m_users.findOne({
@@ -62,6 +62,8 @@ async function addAdmin(req, res) {
       email: email,
       username: username,
       password: hassPass,
+      name: name,
+      salary: salary,
       m_role_id: 2,
     });
 

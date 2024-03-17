@@ -1,3 +1,5 @@
+import { numToIDRCurrency } from "../helper/currency";
+
 export default function TableAdmin({ value = [] }) {
   console.log("ini values", value);
   // if (!value.data.rows) return <Spinner />;
@@ -25,6 +27,9 @@ export default function TableAdmin({ value = [] }) {
             </td>
             <td className="whitespace-nowrap px-3 py-4 text-left text-sm text-gray-500">
               {data.m_role.name}
+            </td>
+            <td className="whitespace-nowrap px-3 py-4 text-left text-sm text-gray-500">
+              {numToIDRCurrency(data.salary)}
             </td>
 
             <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6"></td>

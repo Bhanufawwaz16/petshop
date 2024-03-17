@@ -28,11 +28,11 @@ const Schedule = () => {
     if (pickDay) {
       getSchedule();
     }
-  }, [pickDay]);
+  }, [pickDay, openModal]);
 
   async function getEmploye() {
     const res = await api.get("/user");
-    console.log("res", res);
+    console.log("res employe", res);
 
     setEmploye(res.data.employe);
   }
@@ -109,20 +109,20 @@ const Schedule = () => {
           />
         }
       />
-
-      <div className="flex justify-end mb-4">
-        <button
-          type="button"
-          className="inline-flex items-center rounded-md border border-transparent bg-amber-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
-          onClick={() => {
-            setOpenModal(true);
-          }}
-        >
-          <PlusIcon className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
-          add schedule
-        </button>
-      </div>
-
+      {userGlobal.role === "super admin" && (
+        <div className="flex justify-end mb-4">
+          <button
+            type="button"
+            className="inline-flex items-center rounded-md border border-transparent bg-amber-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+            onClick={() => {
+              setOpenModal(true);
+            }}
+          >
+            <PlusIcon className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
+            add schedule
+          </button>
+        </div>
+      )}
       <Calender schedule={schedule} setPickDay={setPickDay} />
     </div>
   );
