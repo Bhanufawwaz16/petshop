@@ -8,6 +8,7 @@ import CheckOut from "../pages/CheckOut";
 import OrderList from "../pages/OrderList";
 import Register from "../pages/Register";
 import Login from "../pages/Login";
+import Profile from "../pages/Profile";
 
 const routersCustomer = [
   <Route
@@ -61,6 +62,15 @@ const routersCustomer = [
       <>
         <Navbar />
         <OrderList />
+      </>
+    }
+  />,
+  <Route
+    path="/profile"
+    element={
+      <>
+        <Navbar />
+        <Profile />
       </>
     }
   />,

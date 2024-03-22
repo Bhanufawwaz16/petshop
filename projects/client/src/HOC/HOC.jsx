@@ -26,7 +26,7 @@ export default function HOC({ children }) {
       }
     }
     fetchUser();
-  }, []);
+  }, [dispatch]);
 
   if (isLoading) return <Spinner />;
   return children;

@@ -7,7 +7,7 @@ import ProtectedPageNotEmploye from "./middleware/ProtectedPageNotEmploye";
 
 function App() {
   return (
-    <div className="App">
+    <div className="">
       <Routes>{RoutersAdmin}</Routes>
 
       <ProtectedPageNotEmploye adminOnly={true}>

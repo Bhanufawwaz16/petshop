@@ -61,7 +61,7 @@ export default function TransactionDetails({ detailData = [] }) {
           desc="Details of Users Order"
         />
         <section className="rounded-lg border mt-3 overflow-hidden bg-white mb-20">
-          <div className="bg-red-500 text-white p-3">
+          <div className="bg-blue-500 text-white p-3">
             <span className="font-semibold text-yellow-400">Invoice No : </span>{" "}
             INV/{detailData.invoice}
           </div>
@@ -83,7 +83,7 @@ export default function TransactionDetails({ detailData = [] }) {
                 )}
               </div>
               <div className="ml-auto">
-                <span className="font-bold text-red-500">Total :</span>{" "}
+                <span className="font-bold text-blue-500">Total :</span>{" "}
                 {numToIDRCurrency(
                   detailData.m_transaction_details[0].qty *
                     detailData.m_transaction_details[0].m_product.price
@@ -94,7 +94,7 @@ export default function TransactionDetails({ detailData = [] }) {
           </div>
           <div className="flex flex-row m-3 font-bold">
             <div className="ml-auto">
-              <span className="font-bold text-xl text-red-500">
+              <span className="font-bold text-xl text-blue-500">
                 Total Amount :{" "}
               </span>{" "}
               {numToIDRCurrency(detailData.total_price)}

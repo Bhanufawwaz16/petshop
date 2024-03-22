@@ -1,4 +1,4 @@
-const { where } = require("sequelize");
+const { where, Op } = require("sequelize");
 const db = require("../models");
 
 async function getProducts(req, res) {
@@ -6,10 +6,12 @@ async function getProducts(req, res) {
   try {
     const itemsPerPage = 12;
     const ctgrId = parseInt(req.query.categoryId);
+    const q = req.query.q;
     const page = parseInt(req.query.page);
     console.log("page product", page);
 
     const categoryClause = ctgrId ? { m_category_id: ctgrId } : {};
+    const productClause = q ? { name: { [Op.like]: "%" + q + "%" } } : {};
     const offsetLimit = {};
     if (page) {
       offsetLimit.limit = itemsPerPage;
@@ -21,6 +23,7 @@ async function getProducts(req, res) {
       subQuery: false,
       where: {
         ...categoryClause,
+        ...productClause,
       },
       include: [
         {

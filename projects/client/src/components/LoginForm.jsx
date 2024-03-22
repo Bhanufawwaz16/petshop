@@ -79,12 +79,6 @@ export default function LoginForm({
                     className="ml-2 block text-sm text-gray-900"
                   ></label>
                 </div>
-
-                <div className="text-sm">
-                  <a className="font-medium text-indigo-600 hover:text-indigo-500">
-                    Forgot your password?
-                  </a>
-                </div>
               </div>
 
               <div>

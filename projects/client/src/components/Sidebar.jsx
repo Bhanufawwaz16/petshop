@@ -12,10 +12,11 @@ import {
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { string } from "yup";
 import logo from "../assets/logoFullWhite_sidebar.png";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../reducer/userSlice";
 
 const navigation = [
   { name: "Dashboard", path: "/dashboard", icon: HomeIcon, current: true },
@@ -47,11 +48,7 @@ const navigation = [
     current: false,
   },
 ];
-const userNavigation = [
-  { name: "Your Profile", path: "#" },
-  { name: "Settings", path: "#" },
-  { name: "Sign out", path: "#" },
-];
+const userNavigation = [{ name: "Sign out", path: "/login" }];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -61,12 +58,19 @@ export default function Sidebar({ element }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const currentPath = useLocation().pathname;
   const userGlobal = useSelector((state) => state.user);
+  const dispatch = useDispatch();
 
   const modifiedNavigation =
     userGlobal.role === "employe"
       ? navigation.filter((item) => item.name !== "Management")
       : navigation;
 
+  function handleLogout() {
+    dispatch(logout());
+    // dispatch(clearUserCart());
+    localStorage.removeItem("token");
+    // navigate("/");
+  }
   return (
     <>
       {/*
@@ -269,6 +273,9 @@ export default function Sidebar({ element }) {
                                 active ? "bg-gray-100" : "",
                                 "block px-4 py-2 text-sm text-gray-700"
                               )}
+                              onClick={
+                                item.name === "Sign out" ? handleLogout : null
+                              }
                             >
                               {item.name}
                             </Link>

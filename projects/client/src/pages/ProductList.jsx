@@ -16,12 +16,13 @@ const ProductList = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const userGlobal = useSelector((state) => state.user);
   const productsGlobal = useSelector((state) => state.product);
-  console.log("productGlobal", productsGlobal);
+
   const categoryGlobal = useSelector((state) => state.category.categories);
   const [categoryFilter, setCategoryFilter] = useState(categoryOptions[0]);
   const [currentPage, setCurrentPage] = useState(1);
-  console.log("current page", currentPage);
+
   const initialCategoryIdRef = useRef(parseInt(searchParams.get("categoryId")));
+  const searchQuery = searchParams.get("q");
 
   useEffect(() => {
     if (userGlobal.role) {
@@ -29,7 +30,7 @@ const ProductList = () => {
     }
     let query = `page=${currentPage}`;
 
-    console.log("category filter saat ini", categoryFilter);
+    searchQuery ? searchParams.set("q", searchQuery) : searchParams.delete("q");
     categoryFilter.id
       ? searchParams.set("categoryId", categoryFilter.id)
       : searchParams.delete("categoryId");
@@ -38,7 +39,7 @@ const ProductList = () => {
     setSearchParams(searchParams);
 
     dispatch(fetchProducts(query));
-  }, [dispatch, currentPage, categoryFilter, searchParams]);
+  }, [dispatch, currentPage, categoryFilter, searchParams, searchQuery]);
 
   const newCategoryOption = categoryGlobal.map((category) => ({
     id: category.id,
