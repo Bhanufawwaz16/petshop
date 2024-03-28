@@ -8,6 +8,12 @@ async function createTransaction(req, res) {
     const selectedShippingOption = parseInt(req.body.selectedShippingOption);
     const user_id = req.params.id;
 
+    const customer = await db.m_users.findOne({
+      where: {
+        id: user_id,
+      },
+    });
+
     const totalPrice = cart.reduce((total, product) => {
       // Pastikan properti price pada m_product adalah angka yang valid
       const productPrice =
@@ -49,6 +55,7 @@ async function createTransaction(req, res) {
 
       await db.m_stock_history.create({
         status: "OUT",
+        suplier_customer: customer.dataValues.username,
         qty: product.qty,
         m_product_id: product.m_product_id,
       });
@@ -195,7 +202,7 @@ async function updateTransaction(req, res) {
     console.log("req query", req.body);
     console.log("req params id", req.params);
     const { status, role, wantAction } = req.body;
-    console.log("role", role);
+    console.log("wantAction", wantAction);
     const transHId = parseInt(req.params.id);
 
     if (role !== "super admin" && role !== "employe")
@@ -204,6 +211,7 @@ async function updateTransaction(req, res) {
     const statusAction = await db.m_status.findOne({
       where: { name: wantAction },
     });
+    // console.log("statusActionUpdate", statusAction);
 
     const transHExist = await db.m_transaction_headers.findOne({
       where: {
@@ -211,6 +219,7 @@ async function updateTransaction(req, res) {
         status: statusAction.dataValues.id,
       },
     });
+    console.log("transHExist", transHExist);
 
     if (!transHExist)
       return res.status(400).send({ message: "Transaction Not Found" });
@@ -228,7 +237,7 @@ async function updateTransaction(req, res) {
       }
     );
 
-    return res.status(200).end();
+    return res.status(200).send({ message: "Success" });
   } catch (error) {
     console.log("error", error);
     return res.status(400).send(error);

@@ -49,6 +49,11 @@ export default function TableBodyProduct({
               </div>
             </td>
             <td className="px-3 py-4 text-left text-sm text-gray-500">
+              <div className="text-gray-900 truncate max-w-[90px]">
+                {numToIDRCurrency(product.price_from_suplier)}
+              </div>
+            </td>
+            <td className="px-3 py-4 text-left text-sm text-gray-500">
               <div className="text-gray-900 line-clamp-3">
                 {product.description || "—"}
               </div>

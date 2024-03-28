@@ -50,7 +50,14 @@ const StockHistory = () => {
         </div>
       </div>
       <Table2
-        headCols={["No", "Product Name", "Status", "Date", "qty"]}
+        headCols={[
+          "No",
+          "Product Name",
+          "Suplier/customer",
+          "Status",
+          "Date",
+          "qty",
+        ]}
         tableBody={<StockHistoryTable data={dataStockHistory} />}
         // tfoot={<Footer dataSalesReport={dataSalesReport} />}
       />

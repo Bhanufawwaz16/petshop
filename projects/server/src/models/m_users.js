@@ -25,6 +25,10 @@ module.exports = (sequelize, DataTypes) => {
       addres: DataTypes.STRING,
       phone: DataTypes.STRING,
       salary: DataTypes.INTEGER,
+      updatedAt: {
+        type: DataTypes.DATE,
+        allowNull: true, // Izinkan nilai NULL untuk kolom updatedAt
+      },
     },
     {
       sequelize,

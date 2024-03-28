@@ -22,6 +22,7 @@ export default function TransactionTableBody2({
   const [openModalImage, setOpenModalImage] = useState(false);
   const [transHead, setTransHead] = useState([]);
   const [transWaitingForPayment, setTrans] = useState([]);
+  console.log("transWaitingForPayment", transWaitingForPayment);
   const [detailData, setDetailData] = useState([]);
   const [imgPayment, setImgPayment] = useState();
   const navigate = useNavigate();
@@ -120,7 +121,7 @@ export default function TransactionTableBody2({
               <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                 <button
                   className="text-red-600 hover:text-red-900 ml-4"
-                  onClick={() => onClickBtn2(value.id)}
+                  onClick={() => onClickBtn2(value.id, value.m_status.name)}
                 >
                   {button2}
                 </button>

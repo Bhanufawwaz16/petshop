@@ -15,6 +15,9 @@ export default function StockHistoryTable({ data = [] }) {
             <td className="py-4 pl-4 pr-2 text-left  text-sm sm:pl-4 md:pl-2">
               <div className="font-medium text-gray-900">{value.name}</div>
             </td>
+            <td className="hidden py-4 px-3 text-left text-sm text-gray-500 sm:table-cell">
+              {value.suplier_customer}
+            </td>
             <td className="hidden  py-4 px-3 text-left text-sm text-gray-500 sm:table-cell">
               <div
                 className={`inline-flex rounded-full px-2 text-xs font-semibold leading-5 ${

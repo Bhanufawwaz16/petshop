@@ -38,10 +38,11 @@ const Products = () => {
       : {}
   );
   const [productName, setProductName] = useState("");
-  console.log("product name", productName);
+  const [suplier, setSuplier] = useState("");
   const [stock, setStock] = useState(0);
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState(0);
+  const [priceFromSuplier, setPriceFromSuplier] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState("");
   const userGlobal = useSelector((state) => state.user);
   // console.log("Ini User", userGlobal);
@@ -101,17 +102,20 @@ const Products = () => {
 
   function handleSubmit(e) {
     e.preventDefault();
+    const suplierName = suplier ? suplier : null;
     const name = productName ? productName : null;
     const desc = description ? description : null;
     const priceProduct = price ? price : null;
+    const priceFromSuplierProd = priceFromSuplier ? priceFromSuplier : null;
     const stockProduct = stock ? stock : null;
     const categoryid = selectedCategory.id;
 
     const newProduct = new FormData();
-
+    newProduct.append("suplier", suplierName);
     newProduct.append("productName", productName);
     newProduct.append("description", desc);
     newProduct.append("price", priceProduct);
+    newProduct.append("priceFromSuplier", priceFromSuplierProd);
     newProduct.append("stockProduct", stockProduct);
     newProduct.append("category", categoryid);
     newProduct.append("product_image", image);
@@ -172,10 +176,14 @@ const Products = () => {
             setSelectCategory={setSelectedCategory}
             productName={productName}
             setProductName={setProductName}
+            suplier={suplier}
+            setSuplier={setSuplier}
             description={description}
             setDescription={setDescription}
             price={price}
             setPrice={setPrice}
+            priceFromSuplier={priceFromSuplier}
+            setPriceFromSuplier={setPriceFromSuplier}
             image={image}
             setImage={setImage}
             setStock={setStock}
@@ -197,7 +205,14 @@ const Products = () => {
 
       <Table
         className="mb-4"
-        headCols={["Nama Products", "Category", "Qty", "Desc", "stock"]}
+        headCols={[
+          "Nama Products",
+          "Category",
+          "Price",
+          "Price From Suplier",
+          "Desc",
+          "stock",
+        ]}
         tableBody={
           <TableBodyProduct
             onDelete={handleDeleteClick}

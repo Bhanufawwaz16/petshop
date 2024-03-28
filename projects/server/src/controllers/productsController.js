@@ -52,12 +52,13 @@ async function createProducts(req, res) {
   console.log("req createProducts nih", req.body);
 
   try {
-    const { productName, description } = req.body;
+    const { productName, suplier, description } = req.body;
     const stockProduct = parseInt(req.body.stockProduct);
     const price = parseInt(req.body.price);
+    const priceFromSuplier = parseInt(req.body.priceFromSuplier);
     const categoryId = parseInt(req.body.category);
 
-    if (!productName || !description || !price || !categoryId)
+    if (!productName || !suplier || !description || !price || !priceFromSuplier || !categoryId)
       return res.status(400).send({ message: "please completed your data" });
 
     const productNameExist = await db.m_products.findOne({
@@ -75,15 +76,17 @@ async function createProducts(req, res) {
       description: description,
       m_category_id: categoryId,
       price: price,
+      price_from_suplier: priceFromSuplier,
     });
 
-    const stock = await db.m_stocks.create({
+    await db.m_stocks.create({
       m_product_id: product.id,
       stock: stockProduct,
     });
 
-    const stockHistory = await db.m_stock_history.create({
+    await db.m_stock_history.create({
       m_product_id: product.id,
+      suplier_customer: suplier,
       status: "IN",
       qty: stockProduct,
     });

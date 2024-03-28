@@ -77,7 +77,7 @@ async function getStockHistory(req, res) {
 
     const data = await db.sequelize.query(
       `SELECT 
-        mp.name, msh.status, msh.qty, msh.createdAt
+        mp.name, msh.suplier_customer, msh.status, msh.qty, msh.createdAt
         FROM m_stock_histories msh
         LEFT JOIN m_products mp ON msh.m_product_id = mp.id
         ${clauseFilterByDate}

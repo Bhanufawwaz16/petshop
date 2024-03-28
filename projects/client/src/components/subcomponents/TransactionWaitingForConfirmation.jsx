@@ -41,14 +41,16 @@ export default function TransactionWaitingForConfirmation() {
     }
   }
 
-  async function cancelOrder(transactionId) {
+  async function cancelOrder(transactionId, beforeStatus) {
     deleteConfirmationAlert(() =>
       api
         .patch(`/transaction/${transactionId}`, {
           status: "Dibatalkan",
+          wantAction: beforeStatus,
           role: user.role,
         })
         .then((res) => {
+          console.log("res", res);
           if (res.status === 200) {
             setAction(true); // Toggle the value
             successAlert("Order Canceled!");

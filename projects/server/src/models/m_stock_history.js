@@ -9,11 +9,15 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      m_stock_history.belongsTo(models.m_products, {
+        foreignKey: "m_product_id",
+      });
     }
   }
   m_stock_history.init(
     {
       m_product_id: DataTypes.INTEGER,
+      suplier_customer: DataTypes.STRING,
       status: DataTypes.ENUM("IN", "OUT"),
       qty: DataTypes.INTEGER,
     },

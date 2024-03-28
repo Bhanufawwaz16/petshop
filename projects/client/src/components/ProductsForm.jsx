@@ -15,10 +15,14 @@ export default function ProductsForm({
   setSelectCategory,
   productName,
   setProductName,
+  suplier,
+  setSuplier,
   description,
   setDescription,
   price,
   setPrice,
+  priceFromSuplier,
+  setPriceFromSuplier,
   currPage,
   product = {},
   image,
@@ -59,6 +63,26 @@ export default function ProductsForm({
                 value={productName}
                 onChange={(e) => {
                   setProductName(e.target.value);
+                }}
+                required
+              />
+            </div>
+            <div className="sm:col-span-4">
+              <label
+                htmlFor="suplier"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Suplier
+              </label>
+              <input
+                type="text"
+                name="suplier"
+                id="suplier"
+                className="block w-full min-w-0 flex-1 rounded-md border-gray-300 focus:border-orange-500 focus:ring-orange-500 sm:text-sm"
+                // defaultValue={product.name}
+                value={suplier}
+                onChange={(e) => {
+                  setSuplier(e.target.value);
                 }}
                 required
               />
@@ -107,7 +131,7 @@ export default function ProductsForm({
 
             <div className="sm:col-span-2 sm:col-start-1">
               <label
-                htmlFor="price"
+                htmlFor="priceFromSuplier"
                 className="block text-sm font-medium text-gray-700"
               >
                 Price
@@ -121,6 +145,25 @@ export default function ProductsForm({
                 value={price}
                 onChange={(e) => {
                   setPrice(e.target.value);
+                }}
+              />
+            </div>
+            <div className="sm:col-span-2 sm:col-start-1">
+              <label
+                htmlFor="priceFromSuplier"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Price From Suplier
+              </label>
+              <input
+                type="number"
+                min="0"
+                name="priceFromSuplier"
+                id="priceFromSuplier"
+                className="spin-hidden block w-full min-w-0 flex-1 rounded-md border-gray-300 focus:border-orange-500 focus:ring-orange-500 sm:text-sm"
+                value={priceFromSuplier}
+                onChange={(e) => {
+                  setPriceFromSuplier(e.target.value);
                 }}
               />
             </div>
