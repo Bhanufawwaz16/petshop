@@ -57,6 +57,7 @@ const StockHistory = () => {
           "Status",
           "Date",
           "qty",
+          "Total Price",
         ]}
         tableBody={<StockHistoryTable data={dataStockHistory} />}
         // tfoot={<Footer dataSalesReport={dataSalesReport} />}

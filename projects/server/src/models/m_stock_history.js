@@ -20,6 +20,7 @@ module.exports = (sequelize, DataTypes) => {
       suplier_customer: DataTypes.STRING,
       status: DataTypes.ENUM("IN", "OUT"),
       qty: DataTypes.INTEGER,
+      total_price: DataTypes.INTEGER,
     },
     {
       sequelize,

@@ -57,6 +57,7 @@ async function createTransaction(req, res) {
         status: "OUT",
         suplier_customer: customer.dataValues.username,
         qty: product.qty,
+        total_price: totalPrice,
         m_product_id: product.m_product_id,
       });
 

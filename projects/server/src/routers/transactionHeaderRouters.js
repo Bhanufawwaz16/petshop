@@ -4,6 +4,10 @@ const { fileUploader } = require("../middleware/multer");
 
 transHRouters.get("/sales_report", transactionHeaderController.getSalesReport);
 transHRouters.get(
+  "/get_buy_and_sell",
+  transactionHeaderController.getBuyAndSell
+);
+transHRouters.get(
   "/stock_history",
   transactionHeaderController.getStockHistory
 );

@@ -58,7 +58,14 @@ async function createProducts(req, res) {
     const priceFromSuplier = parseInt(req.body.priceFromSuplier);
     const categoryId = parseInt(req.body.category);
 
-    if (!productName || !suplier || !description || !price || !priceFromSuplier || !categoryId)
+    if (
+      !productName ||
+      !suplier ||
+      !description ||
+      !price ||
+      !priceFromSuplier ||
+      !categoryId
+    )
       return res.status(400).send({ message: "please completed your data" });
 
     const productNameExist = await db.m_products.findOne({
@@ -89,6 +96,7 @@ async function createProducts(req, res) {
       suplier_customer: suplier,
       status: "IN",
       qty: stockProduct,
+      total_price: priceFromSuplier * stockProduct,
     });
 
     return res.status(200).send({ message: "succesfully get createProducts" });

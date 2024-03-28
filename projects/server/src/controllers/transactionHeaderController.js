@@ -77,7 +77,7 @@ async function getStockHistory(req, res) {
 
     const data = await db.sequelize.query(
       `SELECT 
-        mp.name, msh.suplier_customer, msh.status, msh.qty, msh.createdAt
+        mp.name, msh.suplier_customer, msh.status, msh.qty, msh.total_price, msh.createdAt
         FROM m_stock_histories msh
         LEFT JOIN m_products mp ON msh.m_product_id = mp.id
         ${clauseFilterByDate}
@@ -95,8 +95,31 @@ async function getStockHistory(req, res) {
   }
 }
 
+async function getBuyAndSell(req, res) {
+  try {
+    const historyBuyAndSell = await db.sequelize.query(
+      `SELECT
+      CASE WHEN SUM(msh.total_price) > 0 THEN SUM(CASE WHEN msh.status = 'IN' THEN msh.total_price ELSE 0 END) ELSE 0 END AS status_IN,
+      CASE WHEN SUM(msh.total_price) > 0 THEN SUM(CASE WHEN msh.status = 'OUT' THEN msh.total_price ELSE 0 END) ELSE 0 END AS status_OUT
+      FROM 
+      m_stock_histories msh;
+  `,
+
+      { type: Sequelize.QueryTypes.SELECT }
+    );
+
+    return res
+      .status(200)
+      .send({ message: "Succesfully get Buy And Sell", historyBuyAndSell });
+  } catch (error) {
+    console.log("error", error);
+    return res.status(400).send(error);
+  }
+}
+
 module.exports = {
   setTransImage,
   getSalesReport,
   getStockHistory,
+  getBuyAndSell,
 };

@@ -1,4 +1,5 @@
 import { convertToDate } from "../helper/convertToDate";
+import { numToIDRCurrency } from "../helper/currency";
 
 export default function StockHistoryTable({ data = [] }) {
   console.log("detail data", data);
@@ -35,6 +36,9 @@ export default function StockHistoryTable({ data = [] }) {
             </td>
             <td className="hidden py-4 px-3 text-left text-sm text-gray-500 sm:table-cell">
               {value.qty}
+            </td>
+            <td className="hidden py-4 px-3 text-left text-sm text-gray-500 sm:table-cell">
+              {numToIDRCurrency(value.total_price)}
             </td>
           </tr>
         </tbody>
