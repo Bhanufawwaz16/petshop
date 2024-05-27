@@ -11,6 +11,7 @@ const initialState = {
   m_role_id: 0,
   role: "",
   addres: "",
+  location: "",
 
   // role: "",
   // },
@@ -23,6 +24,7 @@ export const userSlice = createSlice({
     login: (state, action) => {
       state.id = action.payload.id;
       state.addres = action.payload.addres;
+      state.location = action.payload.location;
       state.birthdate = action.payload.birthdate;
       state.username = action.payload.username;
 

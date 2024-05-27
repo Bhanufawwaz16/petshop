@@ -21,7 +21,7 @@ async function getAdmin(req, res) {
 
     const userAdmin = await db.m_users.findAndCountAll({
       attributes: ["id", "email", "username", "salary"],
-      where: { m_role_id: 2 },
+      where: { m_role_id: 2, flag_active: 1 },
       ...offsetLimit,
       include: [
         {

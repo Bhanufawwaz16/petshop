@@ -12,6 +12,7 @@ const useFormikValidation = (onRegister) => {
       confirmation: "",
       birthdate: "",
       gender: "",
+      location: "",
       phone: "",
     },
     validationSchema: yup.object().shape({
@@ -35,6 +36,7 @@ const useFormikValidation = (onRegister) => {
         .oneOf([yup.ref("password"), null], "Passwords must match"),
       birthdate: yup.string().required("Birthdate is required"),
       gender: yup.string().required("Gender is required"),
+      location: yup.string().required("Location is required"),
       phone: yup.string().required("Phone number is required"),
     }),
     onSubmit: (values) => {

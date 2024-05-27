@@ -181,7 +181,7 @@ async function getTransactionHeaders(req, res) {
         },
         {
           model: db.m_users,
-          attributes: ["name", "addres", "phone"],
+          attributes: ["name", "addres", "phone", "location"],
         },
         {
           model: db.m_status,

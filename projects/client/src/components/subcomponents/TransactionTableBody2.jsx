@@ -104,7 +104,9 @@ export default function TransactionTableBody2({
             </td>
             <td className="text-center">{value.m_user.name}</td>
             <td className="text-center">{value.m_user.phone}</td>
-            <td className="text-center">{value.m_user.addres}</td>
+            <td className="text-center">
+              {value.m_user.addres} {value.m_user.location}
+            </td>
             {button1 ? (
               <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                 <button

@@ -33,7 +33,7 @@ export default function TransactionWaitingForConfirmation() {
       });
       if (res.status === 200) {
         setAction(true);
-        successAlert("Order Delivered!");
+        successAlert("Order In Process");
       }
     } catch (err) {
       console.log("err", err);

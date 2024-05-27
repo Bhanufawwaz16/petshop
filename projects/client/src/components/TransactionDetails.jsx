@@ -94,10 +94,18 @@ export default function TransactionDetails({ detailData = [] }) {
           </div>
           <div className="flex flex-row m-3 font-bold">
             <div className="ml-auto">
+              <span className="text-sm text-blue-500">Total Ongkir : </span>{" "}
+              {numToIDRCurrency(detailData.expedition_price)}
+            </div>
+          </div>
+          <div className="flex flex-row m-3 font-bold">
+            <div className="ml-auto">
               <span className="font-bold text-xl text-blue-500">
                 Total Amount :{" "}
               </span>{" "}
-              {numToIDRCurrency(detailData.total_price)}
+              {numToIDRCurrency(
+                detailData.total_price + detailData.expedition_price
+              )}
             </div>
           </div>
         </section>

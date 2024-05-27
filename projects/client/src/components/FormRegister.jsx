@@ -151,6 +151,34 @@ export default function FormRegister({ onRegister }) {
                 <div className="text-orange-500">{formik.errors.phone}</div>
               )}
             </div>
+
+            <div className="grow">
+              <label
+                htmlFor="gender"
+                className="block text-sm font-medium text-gray-700 text-left"
+              >
+                Location
+              </label>
+              <div className="mt-1">
+                <select
+                  id="location"
+                  name="location"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.location}
+                  className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-orange-500 focus:outline-none focus:ring-orange-500 sm:text-sm"
+                >
+                  <option value="">Select Location</option>
+                  <option value="Yogyakarta">Yogyakarta</option>
+                  <option value="Sleman">Sleman</option>
+                  <option value="Bantul">Bantul</option>
+                </select>
+              </div>
+              {formik.touched.location && formik.errors.location && (
+                <div className="text-orange-500">{formik.errors.location}</div>
+              )}
+            </div>
+
             <div>
               <label
                 htmlFor="addres"

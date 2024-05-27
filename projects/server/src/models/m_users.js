@@ -23,8 +23,14 @@ module.exports = (sequelize, DataTypes) => {
       birthdate: DataTypes.DATE,
       m_role_id: DataTypes.INTEGER,
       addres: DataTypes.STRING,
+      location: DataTypes.STRING,
       phone: DataTypes.STRING,
       salary: DataTypes.INTEGER,
+      flag_active: {
+        type: DataTypes.TINYINT,
+        defaultValue: 1, // Sequelize uses 1 for true in TINYINT
+        allowNull: false,
+      },
       updatedAt: {
         type: DataTypes.DATE,
         allowNull: true, // Izinkan nilai NULL untuk kolom updatedAt

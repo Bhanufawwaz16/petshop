@@ -18,9 +18,9 @@ export default function CheckOut() {
   const [origin, setOrigin] = useState("");
   const [originId, setOriginId] = useState("");
   const [ongkir, setOngkir] = useState([
-    { id: 1, service: "JNE", cost: 14000, days: "2-3 days" },
-    { id: 2, service: "J&T Express", cost: 14000, days: "2-3 days" },
-    { id: 3, service: "SiCepat", cost: 20000, days: "1-2 days" },
+    { id: 1, service: "Yogyakarta", cost: 5000, days: "1 days" },
+    { id: 2, service: "Sleman", cost: 6000, days: "1 days" },
+    { id: 3, service: "Bantul", cost: 7000, days: "1 days" },
   ]);
   const [selectedShippingOption, setSelectedShippingOption] = useState("0");
   console.log("selected option", selectedShippingOption);
@@ -33,11 +33,11 @@ export default function CheckOut() {
   const branchGlobal = useSelector((state) => state.branch);
   const dispatch = useDispatch();
 
-  //   const generateCart = async () => {
-  //     const cart = await api.get("/cart/"+user.id+`/${branchGlobal.selectedBranch.id}`)
-  //     setCart(cart.data.cart)
-  //     dispatch(fetchCart(user.id));
-  //   }
+  const totalQty = cart.reduce((total, item) => total + item.qty, 0);
+  console.log("qty", totalQty);
+  const priceShipping = Math.ceil(totalQty / 5) * selectedShippingOption;
+  console.log("price", priceShipping);
+
   useEffect(() => {
     if (user.id) {
       dispatch(fetchCart(user.id));
@@ -146,7 +146,7 @@ export default function CheckOut() {
           "/transaction/create_transaction/" + user.id,
           {
             cart,
-            selectedShippingOption,
+            selectedShippingOption: priceShipping,
             // branch_id: cart[0].Product.Stocks[0].Branch.id,
             invoice: generateInvoiceNumber(),
           }
@@ -192,9 +192,7 @@ export default function CheckOut() {
   const totalPrice = calculateTotalPrice();
   const totalPriceWithShipping =
     totalPrice +
-    (selectedShippingOption
-      ? parseInt(selectedShippingOption) - discountVoucher
-      : 0);
+    (selectedShippingOption ? parseInt(priceShipping) - discountVoucher : 0);
 
   const discountVouchers = () => {
     let totalDiscount = 0;
@@ -255,7 +253,7 @@ export default function CheckOut() {
                       {user.name}
                     </p>
                     <p className="font-medium mr-3 text-slate-600">
-                      {user.addres}
+                      {user.addres} {user.location}
                     </p>
                     <p className="font-medium mr-3 text-slate-600">
                       {user.phone}
@@ -384,6 +382,12 @@ export default function CheckOut() {
                   </dd>
                 </div>
 
+                <div className="flex items-center justify-between">
+                  <dt className="text-sm text-gray-600">Total Ongkir</dt>
+                  <dd className="text-sm font-medium text-gray-900">
+                    {numToIDRCurrency(priceShipping)}
+                  </dd>
+                </div>
                 {/* <div className="flex items-center justify-between">
                   <dt className="text-sm text-gray-600">Product Discount</dt>
                   <dd className="text-sm font-medium text-gray-900">

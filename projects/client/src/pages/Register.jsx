@@ -20,6 +20,7 @@ const Register = () => {
         password: values.password,
         confirmation: values.confirmation,
         addres: values.addres,
+        location: values.location,
       };
       console.log("ini data", data);
       const res = await api.post(`/auth/register`, data);

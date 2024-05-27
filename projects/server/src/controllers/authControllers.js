@@ -20,6 +20,7 @@ async function register(req, res) {
       password,
       confirmation,
       addres,
+      location,
     } = req.body;
 
     if (
@@ -31,7 +32,8 @@ async function register(req, res) {
       !email ||
       !password ||
       !confirmation ||
-      !addres
+      !addres ||
+      !location
     )
       return res.status(400).send({ message: "Tolong Isi Data Anda" });
 
@@ -56,6 +58,7 @@ async function register(req, res) {
       birthdate: birthdate,
       phone: phone,
       addres: addres,
+      location: location,
       m_role_id: 1,
     });
 
